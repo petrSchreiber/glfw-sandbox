@@ -40,9 +40,27 @@ void opengl_intialize(int width, int height, int fov) {
     glMatrixMode(GL_PROJECTION);                // Switch to Projection-Matrix mode.
     glLoadIdentity();                           // Reset the Projection-Matrix.
 
-    gluPerspective(fov, width / (double)height, 0.09, 100);
+    gluPerspective(fov, width / (double)height, 0.09, 25);
 
     glMatrixMode(GL_MODELVIEW);                 // Select the Modelview-Matrix
+}
+
+void drawGrid(float xSize, float zSize)
+{
+    glColor3ub(255, 255, 255);
+
+    glBegin(GL_LINES);
+    for (int i = -zSize / 2.0; i <= zSize / 2.0; i++) {
+        glVertex3f(-xSize/2.0, 0, i);
+        glVertex3f(xSize/2.0, 0, i);
+    }
+
+    for (int i = -xSize / 2.0; i <= xSize / 2.0; i++) {
+        glVertex3f(i, 0, -zSize / 2.0);
+        glVertex3f(i, 0, zSize / 2.0);
+    }
+
+    glEnd();
 }
 
 int main() {
@@ -74,6 +92,8 @@ int main() {
 
     opengl_intialize(resolutionWidth, resolutionHeight, 90);
 
+    float triangleZ = 0;
+    float rotateZ = 0;
     while (!glfwWindowShouldClose(window))
     {
         // Let's clear color and depth memory
@@ -82,16 +102,29 @@ int main() {
         glLoadIdentity();
 
         // Auxiliary camera
-        gluLookAt(0, 0, 2,      // From
-                  0, 0, 0,      // To
-                  0, 1, 0);     // Up vector
+        gluLookAt(2, 2, 2,    // From X, Y, Z
+                   0, 0, 0,      // To
+                   0, 1, 0);     // Up vector
 
         // Rendering will go here
-        glBegin(GL_TRIANGLES);
-            glVertex3f(-1, -1, 0);
-            glVertex3f( 1, -1, 0);
-            glVertex3f( 0,  1, 0);
-        glEnd();
+        glPushMatrix();
+            triangleZ -= 0.001f;
+            rotateZ -= 0.1f;
+            glTranslatef(0, 0, triangleZ);
+            glRotatef(rotateZ, 0, 0, 1);
+            glBegin(GL_TRIANGLES);
+                glColor3ub(255, 0, 0);
+                glVertex3f(-1, -1, 0);
+
+                glColor3ub(0, 255, 0);
+                glVertex3f( 1, -1, 0);
+
+                glColor3ub(0, 0, 255);
+                glVertex3f( 0,  1, 0);
+            glEnd();
+        glPopMatrix();
+
+        drawGrid(10, 10);
 
         // This basically means - show what we've been working on since glClear
         glfwSwapBuffers(window);
