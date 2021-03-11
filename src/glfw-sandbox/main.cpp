@@ -63,6 +63,38 @@ void drawGrid(float xSize, float zSize)
     glEnd();
 }
 
+void triangle1(float rotateZ)
+{
+
+    glRotatef(rotateZ, 0, 0, 1);
+    glBegin(GL_TRIANGLES);
+        glColor3ub(255, 0, 0);
+        glVertex3f(-1, -1, 0);
+
+        glColor3ub(0, 255, 0);
+        glVertex3f(1, -1, 0);
+
+        glColor3ub(0, 0, 255);
+        glVertex3f(0, 1, 0);
+
+    glEnd();
+}
+
+void triangle2(float rotateZ)
+{
+    glRotatef(rotateZ, 0, 0, 1);
+    glBegin(GL_TRIANGLES);
+        glColor3ub(255, 0, 0);
+        glVertex3f(-1, -1, 0);
+
+        glColor3ub(0, 255, 0);
+        glVertex3f(1, -1, 0);
+
+        glColor3ub(0, 0, 255);
+        glVertex3f(0, 1, 0);
+    glEnd();
+}
+
 int main() {
 
     GLFWwindow* window;
@@ -94,6 +126,7 @@ int main() {
 
     float triangleZ = 0;
     float rotateZ = 0;
+    float rotateY = 0;
     while (!glfwWindowShouldClose(window))
     {
         // Let's clear color and depth memory
@@ -110,7 +143,8 @@ int main() {
         glPushMatrix();
             triangleZ -= 0.001f;
             rotateZ -= 0.1f;
-            glTranslatef(0, 0, triangleZ);
+            rotateY += 0.1f;
+            /*glTranslatef(0, 0, triangleZ);
             glRotatef(rotateZ, 0, 0, 1);
             glBegin(GL_TRIANGLES);
                 glColor3ub(255, 0, 0);
@@ -121,7 +155,9 @@ int main() {
 
                 glColor3ub(0, 0, 255);
                 glVertex3f( 0,  1, 0);
-            glEnd();
+            glEnd();*/
+            triangle1(rotateZ);
+            triangle1(rotateY);
         glPopMatrix();
 
         drawGrid(10, 10);
