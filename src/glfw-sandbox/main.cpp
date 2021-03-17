@@ -10,6 +10,7 @@
 
 #include <iostream>
 
+
 void opengl_intialize(int width, int height, int fov) {
     // Depth
     glEnable(GL_DEPTH_TEST);
@@ -48,6 +49,7 @@ void opengl_intialize(int width, int height, int fov) {
 void drawGrid(float xSize, float zSize)
 {
     glColor3ub(255, 255, 255);
+    glLineWidth(1);
 
     glBegin(GL_LINES);
     for (int i = -zSize / 2.0; i <= zSize / 2.0; i++) {
@@ -59,6 +61,52 @@ void drawGrid(float xSize, float zSize)
         glVertex3f(i, 0, -zSize / 2.0);
         glVertex3f(i, 0, zSize / 2.0);
     }
+
+    glEnd();
+
+    glLineWidth(2);
+
+    glBegin(GL_LINES);
+        glColor3ub(255, 0, 0);
+        glVertex3f(0, 0, 0);
+        glVertex3f(1, 0, 0);
+
+        glColor3ub(0, 255, 0);
+        glVertex3f(0, 0, 0);
+        glVertex3f(0, 1, 0);
+
+        glColor3ub(0, 0, 255);
+        glVertex3f(0, 0, 0);
+        glVertex3f(0, 0, 1);
+    glEnd();
+
+    glColor3ub(255, 255, 255);
+
+}
+
+void drawTriangle()
+{
+    glBegin(GL_TRIANGLES);
+        glColor3ub(255, 0, 0);
+        glVertex3f(0, 0, 0);
+
+        glColor3ub(0, 255, 0);
+        glVertex3f(1, 0, 0);
+
+        glColor3ub(0, 0, 255);
+        glVertex3f(0.5, 1, 0);
+    glEnd();
+}
+
+void drawWheel(int lod) {
+    glBegin(GL_POLYGON);
+
+        glVertex3f(0, 0, 0);
+
+        for (int i = 0; i <= lod; i++)
+        {
+            glVertex3f(std::cos((i * 360 / (float)lod) * 3.14/180.0), std::sin((i * 360 / (float)lod)* 3.14/180.0), 0);
+        }
 
     glEnd();
 }
@@ -90,10 +138,25 @@ int main() {
     // Bind the window and OpenGL context
     glfwMakeContextCurrent(window);
 
-    opengl_intialize(resolutionWidth, resolutionHeight, 90);
+    opengl_intialize(resolutionWidth, resolutionHeight, 60);
 
     float triangleZ = 0;
     float rotateZ = 0;
+    float rotateY = 0;
+
+    float time = 0;
+
+    float cameraX, cameraY, cameraZ;
+    float targetX, targetY, targetZ;
+
+    cameraX = 0;
+    cameraY = 1.7;
+    cameraZ = 0;
+
+    targetX = 0;
+    targetY = 1.7;
+    targetZ = -1;
+    int state = 0;
     while (!glfwWindowShouldClose(window))
     {
         // Let's clear color and depth memory
@@ -102,27 +165,87 @@ int main() {
         glLoadIdentity();
 
         // Auxiliary camera
-        gluLookAt(2, 2, 2,    // From X, Y, Z
-                   0, 0, 0,      // To
-                   0, 1, 0);     // Up vector
+        gluLookAt(cameraX, cameraY, cameraZ,    // From X, Y, Z
+                  targetX, targetY, targetZ,    // To
+                   0, 1, 0);                    // Up vector
 
         // Rendering will go here
-        glPushMatrix();
-            triangleZ -= 0.001f;
-            rotateZ -= 0.1f;
-            glTranslatef(0, 0, triangleZ);
-            glRotatef(rotateZ, 0, 0, 1);
-            glBegin(GL_TRIANGLES);
-                glColor3ub(255, 0, 0);
-                glVertex3f(-1, -1, 0);
+        
+        triangleZ -= 0.001f;
 
-                glColor3ub(0, 255, 0);
-                glVertex3f( 1, -1, 0);
+        rotateZ -= 0.1f;
+        rotateY += 0.1f;
 
-                glColor3ub(0, 0, 255);
-                glVertex3f( 0,  1, 0);
-            glEnd();
+        time += 0.1f;
+
+
+        glPushMatrix();       
+        {
+            state = glfwGetKey(window, GLFW_KEY_UP);
+            if (state == GLFW_PRESS)
+            {
+                cameraZ -= 0.1;
+                targetZ -= 0.1;
+            }
+
+            state = glfwGetKey(window, GLFW_KEY_DOWN);
+            if (state == GLFW_PRESS)
+            {
+                cameraZ += 0.1;
+                targetZ += 0.1;
+            }
+
+            state = glfwGetKey(window, GLFW_KEY_LEFT);
+            if (state == GLFW_PRESS)
+            {
+                cameraX -= 0.1;
+                targetX -= 0.1;
+            }
+
+            state = glfwGetKey(window, GLFW_KEY_RIGHT);
+            if (state == GLFW_PRESS)
+            {
+                cameraX += 0.1;
+                targetX += 0.1;
+            }
+
+
+            state = glfwGetKey(window, GLFW_KEY_C);
+            if (state == GLFW_PRESS)
+            {
+                glPushMatrix();
+                glTranslatef(0, 0, 1);
+                drawWheel(8);
+                glPopMatrix();
+            }
+
+            state = glfwGetKey(window, GLFW_KEY_T);
+            if (state == GLFW_PRESS) {
+                glTranslatef(-1, 0, 0);
+                glRotatef(std::sin(time) * 10, 0, 0, 1);
+                drawTriangle();
+
+                glPushMatrix();                
+                {
+                    glTranslatef(1, 0, 0);
+                    glRotatef(std::sin(time) * 5, 0, 0, 1);
+                    drawTriangle();
+             
+                    glPushMatrix();
+                    {
+                        glTranslatef(1, 0, 0);
+                        glRotatef(std::sin(time) * 2, 0, 0, 1);
+                        glScalef(1, 1.5, 1);
+                        drawTriangle();
+                    }
+                    glPopMatrix();
+                }
+                glPopMatrix();
+            }
+        }
         glPopMatrix();
+        
+        
 
         drawGrid(10, 10);
 
