@@ -9,136 +9,31 @@
 #include <GLFW/glfw3.h> // Will give use GLFW + GL
 
 #include <iostream>
+#include "drawings.h"
+#include "engine.h"
 
-
-void opengl_intialize(int width, int height, int fov) {
-    // Depth
-    glEnable(GL_DEPTH_TEST);
-    glDepthMask(GL_TRUE);
-    glDepthFunc(GL_LESS);
-    glClearDepth(1.0);
-
-    // Color
-    glClearColor(0.0, 0.0, 0.0, 1.0);
-    glEnable(GL_COLOR_MATERIAL);
-    glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-
-    // Lighting
-    glEnable(GL_NORMALIZE);
-    glEnable(GL_AUTO_NORMAL);
-    glShadeModel(GL_SMOOTH);
-    glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, 1);
-
-    // Texture related
-    glPixelStorei(GL_PACK_ALIGNMENT, 1);
-
-    // Blending
-    glBlendFunc(GL_ONE, GL_ONE);
-
-    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-
-    glViewport(0, 0, width, height);            // Set viewport region.
-    glMatrixMode(GL_PROJECTION);                // Switch to Projection-Matrix mode.
-    glLoadIdentity();                           // Reset the Projection-Matrix.
-
-    gluPerspective(fov, width / (double)height, 0.09, 25);
-
-    glMatrixMode(GL_MODELVIEW);                 // Select the Modelview-Matrix
-}
-
-void drawGrid(float xSize, float zSize)
-{
-    glColor3ub(255, 255, 255);
-    glLineWidth(1);
-
-    glBegin(GL_LINES);
-    for (int i = -zSize / 2.0; i <= zSize / 2.0; i++) {
-        glVertex3f(-xSize/2.0, 0, i);
-        glVertex3f(xSize/2.0, 0, i);
-    }
-
-    for (int i = -xSize / 2.0; i <= xSize / 2.0; i++) {
-        glVertex3f(i, 0, -zSize / 2.0);
-        glVertex3f(i, 0, zSize / 2.0);
-    }
-
-    glEnd();
-
-    glLineWidth(2);
-
-    glBegin(GL_LINES);
-        glColor3ub(255, 0, 0);
-        glVertex3f(0, 0, 0);
-        glVertex3f(1, 0, 0);
-
-        glColor3ub(0, 255, 0);
-        glVertex3f(0, 0, 0);
-        glVertex3f(0, 1, 0);
-
-        glColor3ub(0, 0, 255);
-        glVertex3f(0, 0, 0);
-        glVertex3f(0, 0, 1);
-    glEnd();
-
-    glColor3ub(255, 255, 255);
-
-}
-
-void drawTriangle()
-{
-    glBegin(GL_TRIANGLES);
-        glColor3ub(255, 0, 0);
-        glVertex3f(0, 0, 0);
-
-        glColor3ub(0, 255, 0);
-        glVertex3f(1, 0, 0);
-
-        glColor3ub(0, 0, 255);
-        glVertex3f(0.5, 1, 0);
-    glEnd();
-}
-
-void drawWheel(int lod) {
-    glBegin(GL_POLYGON);
-
-        glVertex3f(0, 0, 0);
-
-        for (int i = 0; i <= lod; i++)
-        {
-            glVertex3f(std::cos((i * 360 / (float)lod) * 3.14/180.0), std::sin((i * 360 / (float)lod)* 3.14/180.0), 0);
-        }
-
-    glEnd();
-}
 
 int main() {
 
-    GLFWwindow* window;
+    drawObjects drawx;
+    windowCreator windowObject(1280, 720, 60);
+    auto window = windowObject.getWindow();
+    
 
-    if (!glfwInit())
-    {
-        std::cout << "Failed to initialize GLFW library" << std::endl;
-        return 1;
-    }
+    // Difference between this and GLFWwindow* window; ???
+    /*
+    
+    struct window {
+        int width;
+        int height;
+        const char *title;
+        GLFWmonitor *monitor;
+        GLFWwindow *share;
+    };*/
 
-    const int resolutionWidth = 1280;
-    const int resolutionHeight = 720;
-    window = glfwCreateWindow(resolutionWidth, resolutionHeight,    // Resolution
-                              "GLFW playground",                    // Title
-                              NULL,                                 // Monitor for fullscreen
-                              NULL);                                // Window to steal OpenGL context from - in most cases NULL
 
-    if (!window)
-    {
-        std::cout << "Failed to initialize GLFW window" << std::endl;
-        glfwTerminate();
-        return 2;
-    }
-
-    // Bind the window and OpenGL context
     glfwMakeContextCurrent(window);
-
-    opengl_intialize(resolutionWidth, resolutionHeight, 60);
+    windowObject.opengl_intialize();
 
     float triangleZ = 0;
     float rotateZ = 0;
@@ -157,6 +52,7 @@ int main() {
     targetY = 1.7;
     targetZ = -1;
     int state = 0;
+    
     while (!glfwWindowShouldClose(window))
     {
         // Let's clear color and depth memory
@@ -215,7 +111,7 @@ int main() {
             {
                 glPushMatrix();
                 glTranslatef(0, 0, 1);
-                drawWheel(8);
+                drawx.wheel(8);
                 glPopMatrix();
             }
 
@@ -223,20 +119,20 @@ int main() {
             if (state == GLFW_PRESS) {
                 glTranslatef(-1, 0, 0);
                 glRotatef(std::sin(time) * 10, 0, 0, 1);
-                drawTriangle();
+                drawx.triangle();
 
                 glPushMatrix();                
                 {
                     glTranslatef(1, 0, 0);
                     glRotatef(std::sin(time) * 5, 0, 0, 1);
-                    drawTriangle();
+                    drawx.triangle();
              
                     glPushMatrix();
                     {
                         glTranslatef(1, 0, 0);
                         glRotatef(std::sin(time) * 2, 0, 0, 1);
                         glScalef(1, 1.5, 1);
-                        drawTriangle();
+                        drawx.triangle();
                     }
                     glPopMatrix();
                 }
@@ -245,9 +141,7 @@ int main() {
         }
         glPopMatrix();
         
-        
-
-        drawGrid(10, 10);
+        drawx.grid(10, 10);
 
         // This basically means - show what we've been working on since glClear
         glfwSwapBuffers(window);
