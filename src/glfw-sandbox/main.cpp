@@ -20,7 +20,7 @@ int main() {
     auto window = windowObject.getWindow();
     
 
-    // Difference between this and GLFWwindow* window; ???
+    // What is the difference between this and the previous "GLFWwindow* window;" call ???
     /*
     
     struct window {
@@ -67,7 +67,7 @@ int main() {
 
         // Rendering will go here
         
-        triangleZ -= 0.001f;
+        triangleZ -= 0.001f; //What is the difference between 0.001f and 0.001? Don't know how to google this question :( 
 
         rotateZ -= 0.1f;
         rotateY += 0.1f;

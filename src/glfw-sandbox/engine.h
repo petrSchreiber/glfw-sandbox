@@ -14,6 +14,10 @@ class windowCreator
 private:
 	int resWidth{};
 	int resHeight{};
+	
+	// Could you please clarify what these three do?
+	// Are these ponters? If posssible just a little clarification how this works
+	// This might be tied to main.cpp line 23-32
 	char *title;
 	GLFWmonitor *monitor;
 	GLFWwindow *share;
@@ -29,7 +33,7 @@ public:
 		if (!glfwInit())
 		{
 			std::cout << "Failed to initialize GLFW library" << std::endl;
-			//return 1;
+			//return 1; Why I can't return 1 here?
 		}			
 	};
 
@@ -45,14 +49,14 @@ public:
 		{
 			std::cout << "Failed to initialize GLFW window" << std::endl;
 			glfwTerminate();
-			//return 2; Why I can't return 2?
+			//return 2; same as above
 		}
 
 		return window;
 
 	}
 
-	void opengl_intialize() { //int resWidth, int resHeight, int fov
+	void opengl_intialize() {
 		// Depth
 		glEnable(GL_DEPTH_TEST);
 		glDepthMask(GL_TRUE);
@@ -79,12 +83,12 @@ public:
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
 		glViewport(0, 0, resWidth, resHeight);            // Set viewport region.
-		glMatrixMode(GL_PROJECTION);                // Switch to Projection-Matrix mode.
-		glLoadIdentity();                           // Reset the Projection-Matrix.
+		glMatrixMode(GL_PROJECTION);					  // Switch to Projection-Matrix mode.
+		glLoadIdentity();								  // Reset the Projection-Matrix.
 
 		gluPerspective(fieldOfView, resWidth / (double)resHeight, 0.09, 25);
 
-		glMatrixMode(GL_MODELVIEW);                 // Select the Modelview-Matrix
+		glMatrixMode(GL_MODELVIEW);						  // Select the Modelview-Matrix
 	}
 
 
