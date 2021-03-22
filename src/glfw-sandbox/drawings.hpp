@@ -1,20 +1,19 @@
-#pragma once
 #include <windows.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <math.h>
 
 
-class drawObjects
+class DrawObjects // Making it static does not make any difference as far as I can see
 {
 private:
-	/*void triangle();
-	void wheel(int lod);
-	void grid(float xSize, float zSize);*/
+	//void triangle();
+	//void wheel(int lod);
+	//void grid(float xSize, float zSize);
 
 public:
 
-	void triangle()
+	static void triangle()
 	{
 		glBegin(GL_TRIANGLES);
 		glColor3ub(255, 0, 0);
@@ -29,7 +28,7 @@ public:
 
 	}
 
-	void wheel(int lod)
+	static void wheel(int lod)
 	{
 
 		glBegin(GL_POLYGON);
@@ -45,7 +44,7 @@ public:
 
 	}
 
-	void grid(float xSize, float zSize)
+	static void grid(float xSize, float zSize)
 	{
 		glColor3ub(255, 255, 255);
 		glLineWidth(1);

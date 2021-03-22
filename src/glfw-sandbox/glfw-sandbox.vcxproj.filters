@@ -20,10 +20,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="engine.h">
+    <ClInclude Include="engine.hpp">
       <Filter>Zdrojové soubory</Filter>
     </ClInclude>
-    <ClInclude Include="drawings.h">
+    <ClInclude Include="drawings.hpp">
       <Filter>Zdrojové soubory</Filter>
     </ClInclude>
   </ItemGroup>

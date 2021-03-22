@@ -1,4 +1,3 @@
-#pragma once
 #include <windows.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -9,7 +8,7 @@
 #include <iostream>
 
 
-class windowCreator
+class WindowCreator
 {
 private:
 	int resWidth{};
@@ -27,7 +26,7 @@ private:
 
 public:
 
-	windowCreator(int resW, int resH, int fov) // for now leave other values and hardcode like a noob, Petr help <3 :D
+	WindowCreator(int resW, int resH, int fov) // for now leave other values and hardcode like a noob, Petr help <3 :D
 		: resWidth{ resW }, resHeight{ resH }, fieldOfView{fov}
 	{	
 		if (!glfwInit())

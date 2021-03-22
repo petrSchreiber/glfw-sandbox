@@ -1,6 +1,5 @@
 // Documentation for GLFW: https://www.glfw.org/documentation.html
 
-
 #include <windows.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -9,29 +8,17 @@
 #include <GLFW/glfw3.h> // Will give use GLFW + GL
 
 #include <iostream>
-#include "drawings.h"
-#include "engine.h"
+#include "drawings.hpp"
+#include "engine.hpp"
+
 
 
 int main() {
 
-    drawObjects drawx;
-    windowCreator windowObject(1280, 720, 60);
+    //DrawObjects drawx;
+    WindowCreator windowObject(1280, 720, 60);
     auto window = windowObject.getWindow();
     
-
-    // What is the difference between this and the previous "GLFWwindow* window;" call ???
-    /*
-    
-    struct window {
-        int width;
-        int height;
-        const char *title;
-        GLFWmonitor *monitor;
-        GLFWwindow *share;
-    };*/
-
-
     glfwMakeContextCurrent(window);
     windowObject.opengl_intialize();
 
@@ -111,7 +98,7 @@ int main() {
             {
                 glPushMatrix();
                 glTranslatef(0, 0, 1);
-                drawx.wheel(8);
+                DrawObjects::wheel(8);
                 glPopMatrix();
             }
 
@@ -119,20 +106,20 @@ int main() {
             if (state == GLFW_PRESS) {
                 glTranslatef(-1, 0, 0);
                 glRotatef(std::sin(time) * 10, 0, 0, 1);
-                drawx.triangle();
+                DrawObjects::triangle();
 
                 glPushMatrix();                
                 {
                     glTranslatef(1, 0, 0);
                     glRotatef(std::sin(time) * 5, 0, 0, 1);
-                    drawx.triangle();
+                    DrawObjects::triangle();
              
                     glPushMatrix();
                     {
                         glTranslatef(1, 0, 0);
                         glRotatef(std::sin(time) * 2, 0, 0, 1);
                         glScalef(1, 1.5, 1);
-                        drawx.triangle();
+                        DrawObjects::triangle();
                     }
                     glPopMatrix();
                 }
@@ -141,7 +128,7 @@ int main() {
         }
         glPopMatrix();
         
-        drawx.grid(10, 10);
+        DrawObjects::grid(10, 10);
 
         // This basically means - show what we've been working on since glClear
         glfwSwapBuffers(window);
