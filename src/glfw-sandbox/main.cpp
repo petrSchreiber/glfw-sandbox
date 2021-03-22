@@ -10,14 +10,16 @@
 #include <iostream>
 #include "drawings.hpp"
 #include "engine.hpp"
+#include "controls.hpp"
+#include "controls_static.hpp" // Testing
 
 
 
 int main() {
 
-    //DrawObjects drawx;
     WindowCreator windowObject(1280, 720, 60);
     auto window = windowObject.getWindow();
+    Controls controls(window);
     
     glfwMakeContextCurrent(window);
     
@@ -55,72 +57,65 @@ int main() {
 
         // Rendering will go here
         
-        triangleZ -= 0.001f; //What is the difference between 0.001f and 0.001? Don't know how to google this question :( 
+        triangleZ -= 0.001f; 
 
         rotateZ -= 0.1f;
         rotateY += 0.1f;
 
         time += 0.1f;
 
-
         glPushMatrix();       
         {
-            state = glfwGetKey(window, GLFW_KEY_UP);
-            if (state == GLFW_PRESS)
+            
+            if (ControlsStatic::arrowUP(window)) // Static control without instancing
             {
                 cameraZ -= 0.1;
                 targetZ -= 0.1;
             }
-
-            state = glfwGetKey(window, GLFW_KEY_DOWN);
-            if (state == GLFW_PRESS)
+            
+            if (controls.arrowDOWN()) // Controls with instancing
             {
                 cameraZ += 0.1;
                 targetZ += 0.1;
             }
 
-            state = glfwGetKey(window, GLFW_KEY_LEFT);
-            if (state == GLFW_PRESS)
+            if (controls.arrowLEFT())
             {
                 cameraX -= 0.1;
                 targetX -= 0.1;
             }
 
-            state = glfwGetKey(window, GLFW_KEY_RIGHT);
-            if (state == GLFW_PRESS)
+            if (controls.arrowRIGHT())
             {
                 cameraX += 0.1;
                 targetX += 0.1;
             }
 
-
-            state = glfwGetKey(window, GLFW_KEY_C);
-            if (state == GLFW_PRESS)
+            if (controls.keyC())
             {
                 glPushMatrix();
                 glTranslatef(0, 0, 1);
-                DrawObjects::wheel(8); // calling a sttic function
+                DrawObjects::wheel(8); // calling a static function
                 glPopMatrix();
             }
-
-            state = glfwGetKey(window, GLFW_KEY_T);
-            if (state == GLFW_PRESS) {
+            
+            if (controls.keyT()) {
                 glTranslatef(-1, 0, 0);
                 glRotatef(std::sin(time) * 10, 0, 0, 1);
-                DrawObjects::triangle(); // calling a sttic function
+                DrawObjects::triangle(); // calling a static function
 
                 glPushMatrix();                
                 {
                     glTranslatef(1, 0, 0);
                     glRotatef(std::sin(time) * 5, 0, 0, 1);
-                    DrawObjects::triangle(); // calling a sttic function
+                    DrawObjects::triangle(); // calling a static function
              
                     glPushMatrix();
                     {
                         glTranslatef(1, 0, 0);
                         glRotatef(std::sin(time) * 2, 0, 0, 1);
                         glScalef(1, 1.5, 1);
-                        DrawObjects::triangle(); // calling a sttic function
+                        DrawObjects::triangle(); // calling a static function
                     }
                     glPopMatrix();
                 }

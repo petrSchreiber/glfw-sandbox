@@ -26,5 +26,11 @@
     <ClInclude Include="drawings.hpp">
       <Filter>Zdrojové soubory</Filter>
     </ClInclude>
+    <ClInclude Include="controls.hpp">
+      <Filter>Zdrojové soubory</Filter>
+    </ClInclude>
+    <ClInclude Include="controls_static.hpp">
+      <Filter>Zdrojové soubory</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
