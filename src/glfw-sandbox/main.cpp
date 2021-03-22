@@ -20,6 +20,7 @@ int main() {
     auto window = windowObject.getWindow();
     
     glfwMakeContextCurrent(window);
+    
     windowObject.opengl_intialize();
 
     float triangleZ = 0;
@@ -98,7 +99,7 @@ int main() {
             {
                 glPushMatrix();
                 glTranslatef(0, 0, 1);
-                DrawObjects::wheel(8);
+                DrawObjects::wheel(8); // calling a sttic function
                 glPopMatrix();
             }
 
@@ -106,20 +107,20 @@ int main() {
             if (state == GLFW_PRESS) {
                 glTranslatef(-1, 0, 0);
                 glRotatef(std::sin(time) * 10, 0, 0, 1);
-                DrawObjects::triangle();
+                DrawObjects::triangle(); // calling a sttic function
 
                 glPushMatrix();                
                 {
                     glTranslatef(1, 0, 0);
                     glRotatef(std::sin(time) * 5, 0, 0, 1);
-                    DrawObjects::triangle();
+                    DrawObjects::triangle(); // calling a sttic function
              
                     glPushMatrix();
                     {
                         glTranslatef(1, 0, 0);
                         glRotatef(std::sin(time) * 2, 0, 0, 1);
                         glScalef(1, 1.5, 1);
-                        DrawObjects::triangle();
+                        DrawObjects::triangle(); // calling a sttic function
                     }
                     glPopMatrix();
                 }
@@ -128,7 +129,7 @@ int main() {
         }
         glPopMatrix();
         
-        DrawObjects::grid(10, 10);
+        DrawObjects::grid(10, 10); // calling a sttic function
 
         // This basically means - show what we've been working on since glClear
         glfwSwapBuffers(window);
