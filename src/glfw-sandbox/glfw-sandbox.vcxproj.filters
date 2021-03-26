@@ -18,6 +18,9 @@
     <ClCompile Include="main.cpp">
       <Filter>Zdrojové soubory</Filter>
     </ClCompile>
+    <ClCompile Include="frame.cpp">
+      <Filter>Zdrojové soubory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine.hpp">
@@ -30,6 +33,9 @@
       <Filter>Zdrojové soubory</Filter>
     </ClInclude>
     <ClInclude Include="controls_static.hpp">
+      <Filter>Zdrojové soubory</Filter>
+    </ClInclude>
+    <ClInclude Include="frame.hpp">
       <Filter>Zdrojové soubory</Filter>
     </ClInclude>
   </ItemGroup>
