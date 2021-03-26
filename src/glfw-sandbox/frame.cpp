@@ -11,8 +11,9 @@ void Frame::Begin() {
 
 void Frame::End() {
 	timeEnd = std::chrono::high_resolution_clock::now().time_since_epoch();
+	framerate = 1 / ((double)std::chrono::duration_cast<std::chrono::microseconds>(timeEnd - timeBegin).count() / 1000000.0);
 }
 
 double Frame::GetFrameRate() {
-	return 1/((double)std::chrono::duration_cast<std::chrono::microseconds>(timeEnd - timeBegin).count() / 1000000.0);
+	return framerate;
 }

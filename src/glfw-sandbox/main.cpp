@@ -25,10 +25,6 @@ int main() {
     
     windowObject.opengl_intialize();
 
-    float triangleZ = 0;
-    float rotateZ = 0;
-    float rotateY = 0;
-
     float time = 0;
 
     float cameraX, cameraY, cameraZ;
@@ -44,10 +40,11 @@ int main() {
     int state = 0;
     
     Frame frame{};
-
+    double fps = 5000;
     while (!glfwWindowShouldClose(window))
     {
         frame.Begin();
+        
             // Let's clear color and depth memory
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             // Load identity matrix for modelview
@@ -60,38 +57,33 @@ int main() {
 
             // Rendering will go here
         
-            triangleZ -= 0.001f; 
-
-            rotateZ -= 0.1f;
-            rotateY += 0.1f;
-
-            time += 0.1f;
+            time += 1 / fps;
 
             glPushMatrix();       
             {
             
                 if (ControlsStatic::arrowUP(window)) // Static control without instancing
                 {
-                    cameraZ -= 0.1;
-                    targetZ -= 0.1;
+                    cameraZ -= 5 / fps;
+                    targetZ -= 5 / fps;
                 }
             
                 if (controls.arrowDOWN()) // Controls with instancing
                 {
-                    cameraZ += 0.1;
-                    targetZ += 0.1;
+                    cameraZ += 5 / fps;
+                    targetZ += 5 / fps;
                 }
 
                 if (controls.arrowLEFT())
                 {
-                    cameraX -= 0.1;
-                    targetX -= 0.1;
+                    cameraX -= 5 / fps;
+                    targetX -= 5 / fps;
                 }
 
                 if (controls.arrowRIGHT())
                 {
-                    cameraX += 0.1;
-                    targetX += 0.1;
+                    cameraX += 5 / fps;
+                    targetX += 5 / fps;
                 }
 
                 if (controls.keyC())
@@ -135,8 +127,9 @@ int main() {
             // Check for GLFW events - keyboard, mouse, ...
             glfwPollEvents();
         frame.End();
+        fps = frame.GetFrameRate();
 
-        std::cout << "Sweet FPS: " << frame.GetFrameRate() << std::endl;
+        std::cout << "Sweet FPS: " << fps << std::endl;
     }
 
     // Proper way to deinitialize GLFW - releases context and so on
