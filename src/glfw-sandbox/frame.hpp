@@ -4,8 +4,10 @@
 
 class Frame {
 private:
-	std::chrono::system_clock::duration timeBegin;
-	std::chrono::system_clock::duration timeEnd;
+
+	std::chrono::steady_clock::duration timeBegin;
+	std::chrono::steady_clock::duration timeEnd;
+
 public:
 	Frame() {
 
@@ -15,5 +17,6 @@ public:
 
 	void End();
 
-	float GetFrameRate();
+	double GetFrameRate();
+
 };
