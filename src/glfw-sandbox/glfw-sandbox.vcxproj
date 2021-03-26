@@ -149,6 +149,12 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="controls.hpp" />
+    <ClInclude Include="controls_static.hpp" />
+    <ClInclude Include="engine.hpp" />
+    <ClInclude Include="drawings.hpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
