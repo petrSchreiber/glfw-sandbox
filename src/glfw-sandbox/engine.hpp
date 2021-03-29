@@ -1,12 +1,3 @@
-#include <windows.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
-
-#define GLFW_INCLUDE_NONE
-#include <GLFW/glfw3.h> // Will give use GLFW + GL
-
-#include <iostream>
-
 
 class WindowCreator
 {
@@ -22,38 +13,6 @@ private:
 	GLFWwindow *share;
 
 	int fieldOfView{};
-
-
-public:
-
-	WindowCreator(int resW, int resH, int fov) // for now leave other values and hardcode like a noob, Petr help <3 :D
-		: resWidth{ resW }, resHeight{ resH }, fieldOfView{fov}
-	{	
-		if (!glfwInit())
-		{
-			std::cout << "Failed to initialize GLFW library" << std::endl;
-			//return 1; Why I can't return 1 here?
-		}			
-	};
-
-	auto getWindow() { 
-
-		GLFWwindow* window;
-		window = glfwCreateWindow(resWidth, resHeight,				// Resolution
-			"Having problems with this one in constructor",         // Title
-			NULL,													// Monitor for fullscreen
-			NULL);													// Window to steal OpenGL context from - in most cases NULL
-
-		if (!window)
-		{
-			std::cout << "Failed to initialize GLFW window" << std::endl;
-			glfwTerminate();
-			//return 2; same as above
-		}
-
-		return window;
-
-	}
 
 	void opengl_intialize() {
 		// Depth
@@ -90,6 +49,47 @@ public:
 		glMatrixMode(GL_MODELVIEW);						  // Select the Modelview-Matrix
 	}
 
+public:
 
+	WindowCreator(int resW, int resH, int fov) // for now leave other values and hardcode like a noob, Petr help <3 :D
+		: resWidth{ resW }, resHeight{ resH }, fieldOfView{fov}
+	{
+		if (!glfwInit())
+		{
+			std::cout << "Failed to initialize GLFW library" << std::endl;
+			//return 1; Why I can't return 1 here?
+		}
+	};
+
+	auto getWindow() { 
+
+		GLFWwindow* window;
+		window = glfwCreateWindow(resWidth, resHeight,				// Resolution
+			"Having problems with this one in constructor",         // Title
+			NULL,													// Monitor for fullscreen
+			NULL);													// Window to steal OpenGL context from - in most cases NULL
+
+		if (!window)
+		{
+			std::cout << "Failed to initialize GLFW window" << std::endl;
+			glfwTerminate();
+			//return 2; same as above
+		}
+
+		// Needed before GLEW
+		glfwMakeContextCurrent(window);
+
+		// Get the latest GL, yeaaah!
+		int err = glewInit();
+		if (GLEW_OK != err)
+		{
+			std::cout << "Failed to initialize GLEW library: " << glewGetErrorString(err) << std::endl;
+		}		
+
+		// Initialize OpenGL defaults
+		opengl_intialize();
+
+		return window;
+	}
 };
 
