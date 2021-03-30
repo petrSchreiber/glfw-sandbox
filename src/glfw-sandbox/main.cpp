@@ -1,11 +1,12 @@
 // Documentation for GLFW: https://www.glfw.org/documentation.html
 
 #include <windows.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
 
 #define GLFW_INCLUDE_NONE
-#include <GLFW/glfw3.h> // Will give use GLFW + GL
+#include <GLFW/glfw3.h> // Will give use GLFW
+
+#define GLEW_STATIC
+#include <glew.h>       // Will give us the latest OpenGL available
 
 #include <iostream>
 #include "drawings.hpp"
@@ -20,10 +21,6 @@ int main() {
     WindowCreator windowObject(1280, 720, 60);
     auto window = windowObject.getWindow();
     Controls controls(window);
-    
-    glfwMakeContextCurrent(window);
-    
-    windowObject.opengl_intialize();
 
     float time = 0;
 
