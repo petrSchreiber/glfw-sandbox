@@ -21,6 +21,12 @@
     <ClCompile Include="frame.cpp">
       <Filter>Zdrojové soubory</Filter>
     </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>Zdrojové soubory</Filter>
+    </ClCompile>
+    <ClCompile Include="vector3d.cpp">
+      <Filter>Zdrojové soubory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine.hpp">
@@ -36,6 +42,12 @@
       <Filter>Zdrojové soubory</Filter>
     </ClInclude>
     <ClInclude Include="frame.hpp">
+      <Filter>Zdrojové soubory</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.hpp">
+      <Filter>Zdrojové soubory</Filter>
+    </ClInclude>
+    <ClInclude Include="vector3d.hpp">
       <Filter>Zdrojové soubory</Filter>
     </ClInclude>
   </ItemGroup>

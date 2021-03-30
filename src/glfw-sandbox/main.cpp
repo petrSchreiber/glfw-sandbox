@@ -14,6 +14,7 @@
 #include "controls.hpp"
 #include "controls_static.hpp" // Testing
 #include "frame.hpp"
+#include "camera.hpp"
 
 
 int main() {
@@ -37,6 +38,13 @@ int main() {
     int state = 0;
     
     Frame frame{};
+    Camera firstPersonCamera{};
+
+    Vector3d cameraPos{ 0, 1.7, 0 };
+    Vector3d cameraDirection{ 0, 0, -1 };
+
+    float cameraAngle = 0;
+
     double fps = 5000;
     while (!glfwWindowShouldClose(window))
     {
@@ -48,9 +56,13 @@ int main() {
             glLoadIdentity();
 
             // Auxiliary camera
-            gluLookAt(cameraX, cameraY, cameraZ,    // From X, Y, Z
-                      targetX, targetY, targetZ,    // To
-                       0, 1, 0);                    // Up vector
+            cameraDirection.x = sinf(-cameraAngle * 0.0174533);
+            cameraDirection.z = cosf(-cameraAngle * 0.0174533);
+
+            firstPersonCamera.SetLocation(cameraPos);
+            firstPersonCamera.SetTarget(cameraPos + cameraDirection);
+
+            firstPersonCamera.Apply();
 
             // Rendering will go here
         
@@ -61,26 +73,22 @@ int main() {
             
                 if (ControlsStatic::arrowUP(window)) // Static control without instancing
                 {
-                    cameraZ -= 5 / fps;
-                    targetZ -= 5 / fps;
+                    cameraPos = cameraPos + (cameraDirection / fps);
                 }
             
                 if (controls.arrowDOWN()) // Controls with instancing
                 {
-                    cameraZ += 5 / fps;
-                    targetZ += 5 / fps;
+                    cameraPos = cameraPos - (cameraDirection / fps);
                 }
 
                 if (controls.arrowLEFT())
                 {
-                    cameraX -= 5 / fps;
-                    targetX -= 5 / fps;
+                   cameraAngle -= 45 / fps;
                 }
 
                 if (controls.arrowRIGHT())
                 {
-                    cameraX += 5 / fps;
-                    targetX += 5 / fps;
+                   cameraAngle += 45 / fps;
                 }
 
                 if (controls.keyC())
@@ -126,7 +134,7 @@ int main() {
         frame.End();
         fps = frame.GetFrameRate();
 
-        std::cout << "Sweet FPS: " << fps << std::endl;
+        //std::cout << "Sweet FPS: " << fps << std::endl;
     }
 
     // Proper way to deinitialize GLFW - releases context and so on
