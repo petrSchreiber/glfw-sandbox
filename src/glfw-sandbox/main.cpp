@@ -25,23 +25,24 @@ int main() {
 
     float time = 0;
 
-    float cameraX, cameraY, cameraZ;
-    float targetX, targetY, targetZ;
-
-    cameraX = 0;
-    cameraY = 1.7;
-    cameraZ = 0;
-
-    targetX = 0;
-    targetY = 1.7;
-    targetZ = -1;
     int state = 0;
     
     Frame frame{};
-    Camera firstPersonCamera{};
+
+    CameraManager *activeCamera = nullptr;
 
     Vector3d cameraPos{ 0, 1.7, 0 };
     Vector3d cameraDirection{ 0, 0, -1 };
+    
+    Vector3d cameraPos2{ 0, 1.7, 0 };
+    Vector3d cameraDirection2{ 0, 0, -1 };
+
+    CameraManager firstPersonCamera{ cameraPos };
+    CameraManager thirdPersonCamera{ cameraPos2 };
+
+    activeCamera = &firstPersonCamera;
+
+    
 
     float cameraAngle = 0;
 
@@ -56,13 +57,29 @@ int main() {
             glLoadIdentity();
 
             // Auxiliary camera
-            cameraDirection.x = sinf(-cameraAngle * 0.0174533);
-            cameraDirection.z = cosf(-cameraAngle * 0.0174533);
 
-            firstPersonCamera.SetLocation(cameraPos);
-            firstPersonCamera.SetTarget(cameraPos + cameraDirection);
+            if (activeCamera == &thirdPersonCamera) {
+                cameraDirection.x = sinf(-cameraAngle * 0.0174533);
+                cameraDirection.z = cosf(-cameraAngle * 0.0174533);
 
-            firstPersonCamera.Apply();
+                activeCamera->SetLocation(cameraPos2);
+                activeCamera->SetTarget(cameraPos2 + cameraDirection2);
+
+                activeCamera->Apply();
+                
+            }
+            else {
+                cameraDirection.x = sinf(-cameraAngle * 0.0174533);
+                cameraDirection.z = cosf(-cameraAngle * 0.0174533);
+
+                activeCamera->SetLocation(cameraPos);
+                activeCamera->SetTarget(cameraPos + cameraDirection);
+
+                activeCamera->Apply();
+                
+            }
+
+            
 
             // Rendering will go here
         
@@ -97,6 +114,16 @@ int main() {
                     glTranslatef(0, 0, 1);
                     DrawObjects::wheel(8); // calling a static function
                     glPopMatrix();
+                }
+
+                if (ControlsStatic::keyF(window))
+                {   
+                    std::cout << "Camera switch" << std::endl;
+                    if (activeCamera == &thirdPersonCamera)
+                        activeCamera = &firstPersonCamera;
+                    else if (activeCamera == &firstPersonCamera)
+                        activeCamera = &thirdPersonCamera;
+                    else{}
                 }
             
                 if (controls.keyT()) {

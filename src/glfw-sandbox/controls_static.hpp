@@ -12,6 +12,12 @@ class ControlsStatic
 {
 private:
 
+	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+	{
+		//if (key == GLFW_KEY_E && action == GLFW_PRESS)
+			
+	}
+
 	
 public:
 
@@ -70,6 +76,16 @@ public:
 	{
 		int state{};
 		state = glfwGetKey(window, GLFW_KEY_T);
+		if (state == GLFW_PRESS)
+			return true;
+
+		return false;
+	}
+
+	static bool keyF(GLFWwindow* window)
+	{
+		int state{};
+		state = glfwGetKey(window, GLFW_KEY_F);
 		if (state == GLFW_PRESS)
 			return true;
 
