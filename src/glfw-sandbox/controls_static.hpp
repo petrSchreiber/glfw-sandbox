@@ -12,14 +12,12 @@ class ControlsStatic
 {
 private:
 
-	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-	{
-		//if (key == GLFW_KEY_E && action == GLFW_PRESS)
-			
-	}
+	bool test = false;
 
 	
 public:
+
+
 
 
 	static bool arrowUP(GLFWwindow* window)
@@ -86,11 +84,47 @@ public:
 	{
 		int state{};
 		state = glfwGetKey(window, GLFW_KEY_F);
-		if (state == GLFW_PRESS)
+		
+		if (state == GLFW_PRESS)	
 			return true;
-
+	
 		return false;
 	}
+
+	 static bool keyR(GLFWwindow* window)
+	{	
+		
+		glfwSetKeyCallback(window, key_callback);
+		return false;
+	}
+
+	static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+	{
+
+		if (key == GLFW_KEY_R)
+		{
+			switch (action)
+			{
+			case GLFW_RELEASE:
+			{
+				std::cout << "R key released" << std::endl;;
+				break;
+			}
+			default:
+			{
+				//ControlsStatic::test = false;
+				break;
+
+			}
+			}
+		}
+
+
+
+	}
+	
+		
+	
 
 };
 

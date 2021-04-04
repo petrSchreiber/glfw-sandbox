@@ -116,6 +116,16 @@ int main() {
                     glPopMatrix();
                 }
 
+
+                /////// Isolating for better view
+
+
+
+
+
+
+
+
                 if (ControlsStatic::keyF(window))
                 {   
                     std::cout << "Camera switch" << std::endl;
@@ -125,7 +135,18 @@ int main() {
                         activeCamera = &thirdPersonCamera;
                     else{}
                 }
+
+                if (ControlsStatic::keyR(window))
+                    std::cout << "TestRRR" << std::endl;
             
+
+
+
+
+
+                /////// Isolating for better view
+
+
                 if (controls.keyT()) {
                     glTranslatef(-1, 0, 0);
                     glRotatef(std::sin(time) * 10, 0, 0, 1);
