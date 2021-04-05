@@ -12,13 +12,8 @@ class ControlsStatic
 {
 private:
 
-	bool test = false;
-
-	
+		
 public:
-
-
-
 
 	static bool arrowUP(GLFWwindow* window)
 	{
@@ -82,46 +77,19 @@ public:
 
 	static bool keyF(GLFWwindow* window)
 	{
-		int state{};
-		state = glfwGetKey(window, GLFW_KEY_F);
-		
-		if (state == GLFW_PRESS)	
-			return true;
+		static int lastState = false; // This will be initialized to false initially, but since then, it will remember the last assigned value
+
+		int state = glfwGetKey(window, GLFW_KEY_F);
+		bool pressed = (state == GLFW_PRESS and lastState == false);
+
+		lastState = state;
+
+		return pressed;
+	}
+
+
+
 	
-		return false;
-	}
-
-	 static bool keyR(GLFWwindow* window)
-	{	
-		
-		glfwSetKeyCallback(window, key_callback);
-		return false;
-	}
-
-	static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-	{
-
-		if (key == GLFW_KEY_R)
-		{
-			switch (action)
-			{
-			case GLFW_RELEASE:
-			{
-				std::cout << "R key released" << std::endl;;
-				break;
-			}
-			default:
-			{
-				//ControlsStatic::test = false;
-				break;
-
-			}
-			}
-		}
-
-
-
-	}
 	
 		
 	

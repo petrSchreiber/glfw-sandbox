@@ -15,6 +15,7 @@
 #include "controls_static.hpp" // Testing
 #include "frame.hpp"
 #include "camera.hpp"
+#include <vector>
 
 
 int main() {
@@ -29,7 +30,7 @@ int main() {
     
     Frame frame{};
 
-    CameraManager *activeCamera = nullptr;
+    ;
 
     Vector3d cameraPos{ 0, 1.7, 0 };
     Vector3d cameraDirection{ 0, 0, -1 };
@@ -40,10 +41,13 @@ int main() {
     CameraManager firstPersonCamera{ cameraPos };
     CameraManager thirdPersonCamera{ cameraPos2 };
 
-    activeCamera = &firstPersonCamera;
-
     
 
+    std::vector<CameraManager> cameras{};
+    cameras.emplace_back(firstPersonCamera);
+    cameras.emplace_back(thirdPersonCamera);
+
+    CameraManager &activeCamera = cameras.at(1);
     float cameraAngle = 0;
 
     double fps = 5000;
@@ -58,24 +62,24 @@ int main() {
 
             // Auxiliary camera
 
-            if (activeCamera == &thirdPersonCamera) {
+            if (&activeCamera == &cameras.at(0)) {
                 cameraDirection.x = sinf(-cameraAngle * 0.0174533);
                 cameraDirection.z = cosf(-cameraAngle * 0.0174533);
 
-                activeCamera->SetLocation(cameraPos2);
-                activeCamera->SetTarget(cameraPos2 + cameraDirection2);
+                activeCamera.SetLocation(cameraPos2);
+                activeCamera.SetTarget(cameraPos2 + cameraDirection2);
 
-                activeCamera->Apply();
+                activeCamera.Apply();
                 
             }
             else {
                 cameraDirection.x = sinf(-cameraAngle * 0.0174533);
                 cameraDirection.z = cosf(-cameraAngle * 0.0174533);
 
-                activeCamera->SetLocation(cameraPos);
-                activeCamera->SetTarget(cameraPos + cameraDirection);
+                activeCamera.SetLocation(cameraPos);
+                activeCamera.SetTarget(cameraPos + cameraDirection);
 
-                activeCamera->Apply();
+                activeCamera.Apply();
                 
             }
 
@@ -117,35 +121,17 @@ int main() {
                 }
 
 
-                /////// Isolating for better view
-
-
-
-
-
-
-
-
+               
                 if (ControlsStatic::keyF(window))
                 {   
+                    
                     std::cout << "Camera switch" << std::endl;
-                    if (activeCamera == &thirdPersonCamera)
-                        activeCamera = &firstPersonCamera;
-                    else if (activeCamera == &firstPersonCamera)
-                        activeCamera = &thirdPersonCamera;
+                    if (&activeCamera == &cameras.at(1))
+                        auto &activeCamera = cameras.at(0);
+                    else if (&activeCamera == &cameras.at(0))
+                        auto &activeCamera = cameras.at(1);
                     else{}
                 }
-
-                if (ControlsStatic::keyR(window))
-                    std::cout << "TestRRR" << std::endl;
-            
-
-
-
-
-
-                /////// Isolating for better view
-
 
                 if (controls.keyT()) {
                     glTranslatef(-1, 0, 0);
