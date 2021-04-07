@@ -11,7 +11,7 @@ private:
 	float fov = 60;
 public:
 
-	CameraManager(Vector3d location) : location{location} {
+	CameraManager(std::string cameraName, Vector3d location) : name{cameraName}, location { location } {
 
 	}
 
@@ -20,4 +20,6 @@ public:
 	void SetTarget(Vector3d vec);
 
 	void Apply();
+
+	std::string GetName() const;
 };

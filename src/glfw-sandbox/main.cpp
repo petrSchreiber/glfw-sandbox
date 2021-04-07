@@ -32,23 +32,20 @@ int main() {
 
     ;
 
-    Vector3d cameraPos{ 0, 1.7, 0 };
-    Vector3d cameraDirection{ 0, 0, -1 };
+    Vector3d cameraPos[2] = { { 0, 1.7, 0 }, { 0, 1.7, 0 } };
+    Vector3d cameraDirection[2] = { { 0, 0, -1 }, { 0, 0, -1 } };
     
-    Vector3d cameraPos2{ 0, 1.7, 0 };
-    Vector3d cameraDirection2{ 0, 0, -1 };
 
-    CameraManager firstPersonCamera{ cameraPos };
-    CameraManager thirdPersonCamera{ cameraPos2 };
-
-    
+    CameraManager firstPersonCamera{ "first person", cameraPos[0] };
+    CameraManager thirdPersonCamera{ "third person", cameraPos[1] };
 
     std::vector<CameraManager> cameras{};
     cameras.emplace_back(firstPersonCamera);
     cameras.emplace_back(thirdPersonCamera);
 
-    CameraManager &activeCamera = cameras.at(1);
-    float cameraAngle = 0;
+    int activeCameraIndex = 0;
+
+    float cameraAngle[2] = { 0, 0 };
 
     double fps = 5000;
     while (!glfwWindowShouldClose(window))
@@ -62,27 +59,14 @@ int main() {
 
             // Auxiliary camera
 
-            if (&activeCamera == &cameras.at(0)) {
-                cameraDirection.x = sinf(-cameraAngle * 0.0174533);
-                cameraDirection.z = cosf(-cameraAngle * 0.0174533);
 
-                activeCamera.SetLocation(cameraPos2);
-                activeCamera.SetTarget(cameraPos2 + cameraDirection2);
+            cameraDirection[activeCameraIndex].x = sinf(-cameraAngle[activeCameraIndex] * 0.0174533);
+            cameraDirection[activeCameraIndex].z = cosf(-cameraAngle[activeCameraIndex] * 0.0174533);
 
-                activeCamera.Apply();
-                
-            }
-            else {
-                cameraDirection.x = sinf(-cameraAngle * 0.0174533);
-                cameraDirection.z = cosf(-cameraAngle * 0.0174533);
+            cameras[activeCameraIndex].SetLocation(cameraPos[activeCameraIndex]);
+            cameras[activeCameraIndex].SetTarget(cameraPos[activeCameraIndex] + cameraDirection[activeCameraIndex]);
 
-                activeCamera.SetLocation(cameraPos);
-                activeCamera.SetTarget(cameraPos + cameraDirection);
-
-                activeCamera.Apply();
-                
-            }
-
+            cameras[activeCameraIndex].Apply();
             
 
             // Rendering will go here
@@ -94,22 +78,22 @@ int main() {
             
                 if (ControlsStatic::arrowUP(window)) // Static control without instancing
                 {
-                    cameraPos = cameraPos + (cameraDirection / fps);
+                    cameraPos[activeCameraIndex] = cameraPos[activeCameraIndex] + (cameraDirection[activeCameraIndex] / fps);
                 }
             
                 if (controls.arrowDOWN()) // Controls with instancing
                 {
-                    cameraPos = cameraPos - (cameraDirection / fps);
+                    cameraPos[activeCameraIndex] = cameraPos[activeCameraIndex] - (cameraDirection[activeCameraIndex] / fps);
                 }
 
                 if (controls.arrowLEFT())
                 {
-                   cameraAngle -= 45 / fps;
+                   cameraAngle[activeCameraIndex] -= 45 / fps;
                 }
 
                 if (controls.arrowRIGHT())
                 {
-                   cameraAngle += 45 / fps;
+                   cameraAngle[activeCameraIndex] += 45 / fps;
                 }
 
                 if (controls.keyC())
@@ -124,13 +108,13 @@ int main() {
                
                 if (ControlsStatic::keyF(window))
                 {   
-                    
-                    std::cout << "Camera switch" << std::endl;
-                    if (&activeCamera == &cameras.at(1))
-                        auto &activeCamera = cameras.at(0);
-                    else if (&activeCamera == &cameras.at(0))
-                        auto &activeCamera = cameras.at(1);
-                    else{}
+                    activeCameraIndex++;
+
+                    if (activeCameraIndex > cameras.size() - 1) {
+                        activeCameraIndex = 0;
+                    }
+
+                    std::cout << "Camera active: " << cameras[activeCameraIndex].GetName() << std::endl;
                 }
 
                 if (controls.keyT()) {

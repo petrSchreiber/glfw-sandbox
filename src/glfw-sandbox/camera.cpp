@@ -18,3 +18,7 @@ void CameraManager::Apply() {
 			    target.x,   target.y,   target.z,
 			           0,          1,          0);
 }
+
+std::string CameraManager::GetName() const {
+	return name;
+}
