@@ -15,3 +15,9 @@ Vector3d Vector3d::operator/ (float div) {
 
 	return Vector3d{ x / vectorLength * 1 / div, y / vectorLength * 1 / div, z / vectorLength * 1 / div };
 }
+
+Vector3d Vector3d::operator* (float mul) {
+	float vectorLength = std::cbrt(x * x + y * y + z * z);
+
+	return Vector3d{ x / vectorLength * mul, y / vectorLength * mul, z / vectorLength * mul };
+}

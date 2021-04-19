@@ -35,7 +35,7 @@ int main() {
     cameras.emplace_back("first person", cameraPos[0]);
     cameras.emplace_back("third person", cameraPos[1]);
 
-    
+    Vector3d lightPos = { 0, 1.7, 0 };
 
     int activeCameraIndex = 0;
 
@@ -48,98 +48,139 @@ int main() {
     while (!glfwWindowShouldClose(window))
     {
         frame.Begin();
-        
-            // Let's clear color and depth memory
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            // Load identity matrix for modelview
-            glLoadIdentity();
 
-            // Auxiliary camera
-            cameraDirection[activeCameraIndex].x = sinf(-cameraAngle[activeCameraIndex] * 0.0174533);
-            cameraDirection[activeCameraIndex].z = cosf(-cameraAngle[activeCameraIndex] * 0.0174533);
+        // Let's clear color and depth memory
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        // Load identity matrix for modelview
+        glLoadIdentity();
 
-            auto &activeCamera = cameras[activeCameraIndex];
+        // Auxiliary camera
+        cameraDirection[activeCameraIndex].x = sinf(-cameraAngle[activeCameraIndex] * 0.0174533);
+        cameraDirection[activeCameraIndex].z = cosf(-cameraAngle[activeCameraIndex] * 0.0174533);
 
-            cameras[activeCameraIndex].SetLocation(cameraPos[activeCameraIndex]);
-            cameras[activeCameraIndex].SetTarget(cameraPos[activeCameraIndex] + cameraDirection[activeCameraIndex]);
+        auto& activeCamera = cameras[activeCameraIndex];
 
-            cameras[activeCameraIndex].Apply();
-            
+        cameras[activeCameraIndex].SetLocation(cameraPos[activeCameraIndex]);
+        cameras[activeCameraIndex].SetTarget(cameraPos[activeCameraIndex] + cameraDirection[activeCameraIndex]);
 
-            // Rendering will go here
-        
-            time += 1 / fps;
+        cameras[activeCameraIndex].Apply();
 
-            glPushMatrix();       
+
+        // Rendering will go here
+
+        time += 1 / fps;
+
+        glPushMatrix();
+        {
+
+            if (ControlsStatic::arrowUP(window)) // Static control without instancing
             {
-            
-                if (ControlsStatic::arrowUP(window)) // Static control without instancing
+                cameraPos[activeCameraIndex] = cameraPos[activeCameraIndex] + ((cameraDirection[activeCameraIndex] * 15) / fps);
+            }
+
+            if (controls.arrowDOWN()) // Controls with instancing
+            {
+                cameraPos[activeCameraIndex] = cameraPos[activeCameraIndex] - ((cameraDirection[activeCameraIndex] * 15) / fps);
+            }
+
+            if (controls.arrowLEFT())
+            {
+                cameraAngle[activeCameraIndex] -= 180 / fps;
+            }
+
+            if (controls.arrowRIGHT())
+            {
+                cameraAngle[activeCameraIndex] += 180 / fps;
+            }
+
+            if (controls.keyC())
+            {
+                glPushMatrix();
+                glTranslatef(0, 0, 1);
+                DrawObjects::wheel(8); // calling a static function
+                glPopMatrix();
+            }
+
+
+
+            if (ControlsStatic::keyF(window))
+            {
+                activeCameraIndex++;
+
+                if (activeCameraIndex > cameras.size() - 1) {
+                    activeCameraIndex = 0;
+                }
+
+                std::cout << "Camera active: " << cameras[activeCameraIndex].GetName() << std::endl;
+            }
+
+            if (controls.keyT()) {
+                glTranslatef(-1, 0, 0);
+                glRotatef(std::sin(time) * 10, 0, 0, 1);
+                DrawObjects::triangle(); // calling a static function
+
+                glPushMatrix();
                 {
-                    cameraPos[activeCameraIndex] = cameraPos[activeCameraIndex] + (cameraDirection[activeCameraIndex] / fps);
-                }
-            
-                if (controls.arrowDOWN()) // Controls with instancing
-                {
-                    cameraPos[activeCameraIndex] = cameraPos[activeCameraIndex] - (cameraDirection[activeCameraIndex] / fps);
-                }
-
-                if (controls.arrowLEFT())
-                {
-                   cameraAngle[activeCameraIndex] -= 45 / fps;
-                }
-
-                if (controls.arrowRIGHT())
-                {
-                   cameraAngle[activeCameraIndex] += 45 / fps;
-                }
-
-                if (controls.keyC())
-                {
-                    glPushMatrix();
-                    glTranslatef(0, 0, 1);
-                    DrawObjects::wheel(8); // calling a static function
-                    glPopMatrix();
-                }
-
-
-               
-                if (ControlsStatic::keyF(window))
-                {   
-                    activeCameraIndex++;
-
-                    if (activeCameraIndex > cameras.size() - 1) {
-                        activeCameraIndex = 0;
-                    }
-
-                    std::cout << "Camera active: " << cameras[activeCameraIndex].GetName() << std::endl;
-                }
-
-                if (controls.keyT()) {
-                    glTranslatef(-1, 0, 0);
-                    glRotatef(std::sin(time) * 10, 0, 0, 1);
+                    glTranslatef(1, 0, 0);
+                    glRotatef(std::sin(time) * 5, 0, 0, 1);
                     DrawObjects::triangle(); // calling a static function
 
-                    glPushMatrix();                
+                    glPushMatrix();
                     {
                         glTranslatef(1, 0, 0);
-                        glRotatef(std::sin(time) * 5, 0, 0, 1);
+                        glRotatef(std::sin(time) * 2, 0, 0, 1);
+                        glScalef(1, 1.5, 1);
                         DrawObjects::triangle(); // calling a static function
-             
-                        glPushMatrix();
-                        {
-                            glTranslatef(1, 0, 0);
-                            glRotatef(std::sin(time) * 2, 0, 0, 1);
-                            glScalef(1, 1.5, 1);
-                            DrawObjects::triangle(); // calling a static function
-                        }
-                        glPopMatrix();
                     }
                     glPopMatrix();
                 }
+                glPopMatrix();
             }
-            glPopMatrix();
-        
-            DrawObjects::grid(10, 10); // calling a sttic function
+        }
+        glPopMatrix();
+
+        DrawObjects::grid(10, 10); // calling a sttic function
+
+        glEnable(GL_LIGHTING);
+
+
+        lightPos.x = std::sin(time) * 5;
+        lightPos.y = std::cos(time) * 5;
+        lightPos.z = 5;
+
+        float position[4]{ lightPos.x, lightPos.y, lightPos.z, 1 };
+        float ambient[4]{ 0 / 255.0f, 0 / 255.0f, 255 / 255.0f, 255/255.0f };
+        float diffuse[4]{ 255 / 255.0f, 255 / 255.0f, 255 / 255.0f, 255 / 255.0f };
+        //float specular[4]{ 255 / 255.0f, 255 / 255.0f, 255 / 255.0f, 255 / 255.0f };
+
+            glLightfv(GL_LIGHT0, GL_POSITION, position);
+            glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+            glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+            //glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+            glEnable(GL_LIGHT0);
+            
+            glBegin(GL_QUADS);
+            for (int x = -10; x < 10; x++) {
+                for (int y = -10; y < 10; y++) {
+                    glNormal3f(0, 0, 1);
+                    glVertex3f(x-0.5, y- 0.5, 0);
+                    glVertex3f(x+ 0.5, y- 0.5, 0);
+                    glVertex3f(x+ 0.5, y+ 0.5, 0);
+                    glVertex3f(x- 0.5, y+ 0.5, 0);
+                }
+            }
+
+            for (int x = -10; x < 10; x++) {
+                for (int z = -10; z < 10; z++) {
+                    glNormal3f(0, 1, 0);
+                    glVertex3f(x - 0.5, 0, z - 0.5);
+                    glVertex3f(x + 0.5, 0, z - 0.5);
+                    glVertex3f(x + 0.5, 0, z + 0.5);
+                    glVertex3f(x - 0.5, 0, z + 0.5);
+                }
+            }
+            glEnd();
+            glDisable(GL_LIGHTING);
 
             // This basically means - show what we've been working on since glClear
             glfwSwapBuffers(window);

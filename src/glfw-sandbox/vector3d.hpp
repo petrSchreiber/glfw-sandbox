@@ -16,4 +16,6 @@ public:
 	Vector3d operator- (const Vector3d& other);
 
 	Vector3d operator/ (float div);
+
+	Vector3d operator* (float div);
 };
