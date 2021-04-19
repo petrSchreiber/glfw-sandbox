@@ -24,30 +24,27 @@ int main() {
     auto window = windowObject.getWindow();
     Controls controls(window);
 
-    float time = 0;
-
-    int state = 0;
     
+        
     Frame frame{};
 
-    ;
-
-    Vector3d cameraPos[2] = { { 0, 1.7, 0 }, { 0, 1.7, 0 } };
-    Vector3d cameraDirection[2] = { { 0, 0, -1 }, { 0, 0, -1 } };
-    
-
-    CameraManager firstPersonCamera{ "first person", cameraPos[0] };
-    CameraManager thirdPersonCamera{ "third person", cameraPos[1] };
+    Vector3d cameraPos[2] = { { 0, 1.7, 0 }, { 0, 2, -5 } };
+    Vector3d cameraDirection[2] = { { 0, 0, 1 }, { 0, 0, 1 } };
 
     std::vector<CameraManager> cameras{};
-    cameras.emplace_back(firstPersonCamera);
-    cameras.emplace_back(thirdPersonCamera);
+    cameras.emplace_back("first person", cameraPos[0]);
+    cameras.emplace_back("third person", cameraPos[1]);
+
+    
 
     int activeCameraIndex = 0;
 
     float cameraAngle[2] = { 0, 0 };
 
+   
+
     double fps = 5000;
+    float time = 0;
     while (!glfwWindowShouldClose(window))
     {
         frame.Begin();
@@ -58,10 +55,10 @@ int main() {
             glLoadIdentity();
 
             // Auxiliary camera
-
-
             cameraDirection[activeCameraIndex].x = sinf(-cameraAngle[activeCameraIndex] * 0.0174533);
             cameraDirection[activeCameraIndex].z = cosf(-cameraAngle[activeCameraIndex] * 0.0174533);
+
+            auto &activeCamera = cameras[activeCameraIndex];
 
             cameras[activeCameraIndex].SetLocation(cameraPos[activeCameraIndex]);
             cameras[activeCameraIndex].SetTarget(cameraPos[activeCameraIndex] + cameraDirection[activeCameraIndex]);
