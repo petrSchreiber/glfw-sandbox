@@ -141,15 +141,24 @@ int main() {
 
         DrawObjects::grid(10, 10); // calling a sttic function
 
+
+        glPointSize(5);
+        glColor3ub(255, 255, 255);
+        glBegin(GL_POINTS);
+            glVertex3f(lightPos.x, lightPos.y, lightPos.z);
+        glEnd();
+
+        // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
         glEnable(GL_LIGHTING);
 
 
         lightPos.x = std::sin(time) * 5;
         lightPos.y = std::cos(time) * 5;
-        lightPos.z = 5;
+        lightPos.z = 0.5;
 
         float position[4]{ lightPos.x, lightPos.y, lightPos.z, 1 };
-        float ambient[4]{ 0 / 255.0f, 0 / 255.0f, 255 / 255.0f, 255/255.0f };
+        float ambient[4]{ 0 / 255.0f, 0 / 255.0f, 0 / 255.0f, 255/255.0f };
         float diffuse[4]{ 255 / 255.0f, 255 / 255.0f, 255 / 255.0f, 255 / 255.0f };
         //float specular[4]{ 255 / 255.0f, 255 / 255.0f, 255 / 255.0f, 255 / 255.0f };
 
@@ -160,16 +169,74 @@ int main() {
             glEnable(GL_LIGHT0);
             
             glBegin(GL_QUADS);
+
+                // Front
+                glNormal3f(0, 0, 1);
+                glVertex3f(-0.5, -0.5, 0.5);
+                glVertex3f( 0.5, -0.5, 0.5);
+                glVertex3f( 0.5,  0.5, 0.5);
+                glVertex3f(-0.5,  0.5, 0.5);
+
+                // Back
+                glNormal3f(0, 0, -1);
+                glVertex3f(-0.5,  0.5, -0.5);
+                glVertex3f(0.5, 0.5, -0.5);
+                glVertex3f(0.5, -0.5, -0.5);
+                glVertex3f(-0.5, -0.5, -0.5);
+
+                // Left
+                glNormal3f(1, 0, 0);
+                glVertex3f(0.5,  0.5, -0.5);
+                glVertex3f(0.5, 0.5, 0.5);
+                glVertex3f(0.5, -0.5, 0.5);
+                glVertex3f(0.5, -0.5, -0.5);
+
+                // Right
+                glNormal3f(-1, 0, 0);
+                glVertex3f(-0.5, -0.5, -0.5);
+                glVertex3f(-0.5, -0.5, 0.5);
+                glVertex3f(-0.5, 0.5, 0.5);
+                glVertex3f(-0.5, 0.5, -0.5);
+
+                // Top
+                glNormal3f(1, 0, 0);
+                glVertex3f(-0.5, 0.5, -0.5);
+                glVertex3f(-0.5, 0.5, 0.5);
+                glVertex3f( 0.5, 0.5, 0.5);
+                glVertex3f( 0.5, 0.5, -0.5);
+
+                // Bottom
+                glNormal3f(-1, 0, 0);
+                glVertex3f( 0.5, -0.5, -0.5);
+                glVertex3f(0.5, -0.5, 0.5);
+                glVertex3f(-0.5, -0.5, 0.5);
+                glVertex3f(-0.5, -0.5, -0.5);
+
+            glEnd();
+            /*
+            glBegin(GL_QUADS);
+
+            glNormal3f(0, 0, 1);
+            glVertex3f(-5, -5, 0);
+            glVertex3f( 5, -5, 0);
+            glVertex3f( 5,  5, 0);
+            glVertex3f(-5,  5, 0);
+
+            glEnd();
+            */
+
+            
+            glBegin(GL_QUADS);
             for (int x = -10; x < 10; x++) {
                 for (int y = -10; y < 10; y++) {
                     glNormal3f(0, 0, 1);
-                    glVertex3f(x-0.5, y- 0.5, 0);
+                    glVertex3f(x-0.5,  y- 0.5, 0);
                     glVertex3f(x+ 0.5, y- 0.5, 0);
                     glVertex3f(x+ 0.5, y+ 0.5, 0);
                     glVertex3f(x- 0.5, y+ 0.5, 0);
                 }
             }
-
+           /*
             for (int x = -10; x < 10; x++) {
                 for (int z = -10; z < 10; z++) {
                     glNormal3f(0, 1, 0);
@@ -179,8 +246,13 @@ int main() {
                     glVertex3f(x - 0.5, 0, z + 0.5);
                 }
             }
+            */
             glEnd();
+            
+
             glDisable(GL_LIGHTING);
+
+            //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
             // This basically means - show what we've been working on since glClear
             glfwSwapBuffers(window);
