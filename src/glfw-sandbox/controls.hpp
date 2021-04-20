@@ -76,5 +76,19 @@ public:
 		return false;
 	}
 
+	/*static bool keyR(GLFWwindow* window)
+	{
+		glfwSetKeyCallback(window, key_callback);
+		return false;
+	}
+
+	static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+	{
+		if (key == GLFW_KEY_R && action == GLFW_PRESS)
+			std::cout << "R key pressed" << std::endl;
+
+
+	}*/
+
 };
 

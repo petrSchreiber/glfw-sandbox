@@ -12,9 +12,8 @@ class ControlsStatic
 {
 private:
 
-	
+		
 public:
-
 
 	static bool arrowUP(GLFWwindow* window)
 	{
@@ -75,6 +74,25 @@ public:
 
 		return false;
 	}
+
+	static bool keyF(GLFWwindow* window)
+	{
+		static int lastState = false; // This will be initialized to false initially, but since then, it will remember the last assigned value
+
+		int state = glfwGetKey(window, GLFW_KEY_F);
+		bool pressed = (state == GLFW_PRESS and lastState == false);
+
+		lastState = state;
+
+		return pressed;
+	}
+
+
+
+	
+	
+		
+	
 
 };
 

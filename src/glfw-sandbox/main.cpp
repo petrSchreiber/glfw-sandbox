@@ -14,6 +14,8 @@
 #include "controls.hpp"
 #include "controls_static.hpp" // Testing
 #include "frame.hpp"
+#include "camera.hpp"
+#include <vector>
 
 
 int main() {
@@ -22,22 +24,27 @@ int main() {
     auto window = windowObject.getWindow();
     Controls controls(window);
 
-    float time = 0;
-
-    float cameraX, cameraY, cameraZ;
-    float targetX, targetY, targetZ;
-
-    cameraX = 0;
-    cameraY = 1.7;
-    cameraZ = 0;
-
-    targetX = 0;
-    targetY = 1.7;
-    targetZ = -1;
-    int state = 0;
     
+        
     Frame frame{};
+
+    Vector3d cameraPos[2] = { { 0, 1.7, 0 }, { 0, 2, -5 } };
+    Vector3d cameraDirection[2] = { { 0, 0, 1 }, { 0, 0, 1 } };
+
+    std::vector<CameraManager> cameras{};
+    cameras.emplace_back("first person", cameraPos[0]);
+    cameras.emplace_back("third person", cameraPos[1]);
+
+    
+
+    int activeCameraIndex = 0;
+
+    float cameraAngle[2] = { 0, 0 };
+
+   
+
     double fps = 5000;
+    float time = 0;
     while (!glfwWindowShouldClose(window))
     {
         frame.Begin();
@@ -48,9 +55,16 @@ int main() {
             glLoadIdentity();
 
             // Auxiliary camera
-            gluLookAt(cameraX, cameraY, cameraZ,    // From X, Y, Z
-                      targetX, targetY, targetZ,    // To
-                       0, 1, 0);                    // Up vector
+            cameraDirection[activeCameraIndex].x = sinf(-cameraAngle[activeCameraIndex] * 0.0174533);
+            cameraDirection[activeCameraIndex].z = cosf(-cameraAngle[activeCameraIndex] * 0.0174533);
+
+            auto &activeCamera = cameras[activeCameraIndex];
+
+            cameras[activeCameraIndex].SetLocation(cameraPos[activeCameraIndex]);
+            cameras[activeCameraIndex].SetTarget(cameraPos[activeCameraIndex] + cameraDirection[activeCameraIndex]);
+
+            cameras[activeCameraIndex].Apply();
+            
 
             // Rendering will go here
         
@@ -61,26 +75,22 @@ int main() {
             
                 if (ControlsStatic::arrowUP(window)) // Static control without instancing
                 {
-                    cameraZ -= 5 / fps;
-                    targetZ -= 5 / fps;
+                    cameraPos[activeCameraIndex] = cameraPos[activeCameraIndex] + (cameraDirection[activeCameraIndex] / fps);
                 }
             
                 if (controls.arrowDOWN()) // Controls with instancing
                 {
-                    cameraZ += 5 / fps;
-                    targetZ += 5 / fps;
+                    cameraPos[activeCameraIndex] = cameraPos[activeCameraIndex] - (cameraDirection[activeCameraIndex] / fps);
                 }
 
                 if (controls.arrowLEFT())
                 {
-                    cameraX -= 5 / fps;
-                    targetX -= 5 / fps;
+                   cameraAngle[activeCameraIndex] -= 45 / fps;
                 }
 
                 if (controls.arrowRIGHT())
                 {
-                    cameraX += 5 / fps;
-                    targetX += 5 / fps;
+                   cameraAngle[activeCameraIndex] += 45 / fps;
                 }
 
                 if (controls.keyC())
@@ -90,7 +100,20 @@ int main() {
                     DrawObjects::wheel(8); // calling a static function
                     glPopMatrix();
                 }
-            
+
+
+               
+                if (ControlsStatic::keyF(window))
+                {   
+                    activeCameraIndex++;
+
+                    if (activeCameraIndex > cameras.size() - 1) {
+                        activeCameraIndex = 0;
+                    }
+
+                    std::cout << "Camera active: " << cameras[activeCameraIndex].GetName() << std::endl;
+                }
+
                 if (controls.keyT()) {
                     glTranslatef(-1, 0, 0);
                     glRotatef(std::sin(time) * 10, 0, 0, 1);
@@ -126,7 +149,7 @@ int main() {
         frame.End();
         fps = frame.GetFrameRate();
 
-        std::cout << "Sweet FPS: " << fps << std::endl;
+        //std::cout << "Sweet FPS: " << fps << std::endl;
     }
 
     // Proper way to deinitialize GLFW - releases context and so on
