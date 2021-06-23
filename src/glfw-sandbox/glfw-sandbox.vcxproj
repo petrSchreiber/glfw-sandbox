@@ -150,6 +150,7 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="frame.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="logger.cpp" />
     <ClCompile Include="vector3d.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +160,7 @@
     <ClInclude Include="engine.hpp" />
     <ClInclude Include="drawings.hpp" />
     <ClInclude Include="frame.hpp" />
+    <ClInclude Include="logger.hpp" />
     <ClInclude Include="vector3d.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
