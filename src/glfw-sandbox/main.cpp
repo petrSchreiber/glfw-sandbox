@@ -42,6 +42,8 @@ int main() {
     log.warning("Test");
     log.error("Test");
     log.critical("Test");
+    log.debug("Test");
+    log.trace("Test");
 
     int activeCameraIndex = 0;
 
