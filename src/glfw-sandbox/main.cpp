@@ -38,7 +38,10 @@ int main() {
     cameras.emplace_back("first person", cameraPos[0]);
     cameras.emplace_back("third person", cameraPos[1]);
 
+    log.info("Test");
+    log.warning("Test");
     log.error("Test");
+    log.critical("Test");
 
     int activeCameraIndex = 0;
 

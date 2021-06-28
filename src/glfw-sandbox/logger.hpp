@@ -2,23 +2,27 @@
 
 #include <string>
 
+// work in progres, adding some basic stuff at the moment
+// https://github.com/gabime/spdlog
+
 class logger
 {
 private:
 
 public:
 	
-	//template<typename T>
+	void trace(std::string text);
+
+	void debug(std::string text);
+	
 	void info(std::string text);
 
-	template<typename T>
-	void error(T text);
+	void warning(std::string text);
 
-	template<typename T>
-	void warning(T text);
+	void error(std::string text);
 
-	template<typename T>
-	void debug(T text);
+	void critical(std::string text);
 
 };
+
 

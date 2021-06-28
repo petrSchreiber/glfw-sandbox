@@ -1,31 +1,45 @@
 #include "logger.hpp"
 #include <iostream>
 #include <string>
+#include "spdlog/spdlog.h"
 
-//template<typename T>
+// work in progres, adding some basic stuff at the moment
+// https://github.com/gabime/spdlog
+
+
+
+void logger::trace(std::string text) {
+
+	spdlog::trace(text);
+
+}
+
+void logger::debug(std::string text) {
+
+	spdlog::debug(text);
+
+}
+
 void logger::info(std::string text){
 
-	std::cout << text << std::endl;
+	spdlog::info(text);
 
 }
 
-template<typename T>
-void logger::error(T text) {
+void logger::warning(std::string text) {
 
-	std::cout << "[X]Error: " << text << std::endl;
-
-}
-
-template<typename T>
-void logger::warning(T text) {
-
-	std::cout << "[!]Warning: " << text << std::endl;
+	spdlog::warn(text);
 
 }
 
-template<typename T>
-void logger::debug(T text) {
+void logger::error(std::string text) {
 
-	std::cout << "[~]Debug: " << text << std::endl;
+	spdlog::error(text);
+
+}
+
+void logger::critical(std::string text) {
+
+	spdlog::critical(text);
 
 }
