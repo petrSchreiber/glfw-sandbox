@@ -11,17 +11,17 @@ private:
 
 public:
 	
-	void trace(std::string text);
+	void trace(const std::string& text);
 
-	void debug(std::string text);
+	void debug(const std::string& text);
 	
-	void info(std::string text);
+	void info(const std::string& text);
 
-	void warning(std::string text);
+	void warning(const std::string& text);
 
-	void error(std::string text);
+	void error(const std::string& text);
 
-	void critical(std::string text);
+	void critical(const std::string& text);
 
 };
 

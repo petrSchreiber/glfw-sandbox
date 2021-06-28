@@ -8,37 +8,37 @@
 
 
 
-void logger::trace(std::string text) {
+void logger::trace(const std::string& text) {
 
 	spdlog::trace(text);
 
 }
 
-void logger::debug(std::string text) {
+void logger::debug(const std::string& text) {
 
 	spdlog::debug(text);
 
 }
 
-void logger::info(std::string text){
+void logger::info(const std::string& text){
 
 	spdlog::info(text);
 
 }
 
-void logger::warning(std::string text) {
+void logger::warning(const std::string& text) {
 
 	spdlog::warn(text);
 
 }
 
-void logger::error(std::string text) {
+void logger::error(const std::string& text) {
 
 	spdlog::error(text);
 
 }
 
-void logger::critical(std::string text) {
+void logger::critical(const std::string& text) {
 
 	spdlog::critical(text);
 
