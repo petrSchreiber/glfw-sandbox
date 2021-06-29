@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Zdrojové soubory\logger">
+      <UniqueIdentifier>{24dd2e2f-0721-475b-af42-7b931f833ef4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -26,6 +29,9 @@
     </ClCompile>
     <ClCompile Include="vector3d.cpp">
       <Filter>Zdrojové soubory</Filter>
+    </ClCompile>
+    <ClCompile Include="logger.cpp">
+      <Filter>Zdrojové soubory\logger</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +55,9 @@
     </ClInclude>
     <ClInclude Include="vector3d.hpp">
       <Filter>Zdrojové soubory</Filter>
+    </ClInclude>
+    <ClInclude Include="logger.hpp">
+      <Filter>Zdrojové soubory\logger</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

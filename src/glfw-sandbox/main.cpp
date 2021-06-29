@@ -16,9 +16,12 @@
 #include "frame.hpp"
 #include "camera.hpp"
 #include <vector>
+#include "logger.hpp"
 
 
 int main() {
+
+    logger log;
 
     WindowCreator windowObject(1280, 720, 60);
     auto window = windowObject.getWindow();
@@ -35,7 +38,12 @@ int main() {
     cameras.emplace_back("first person", cameraPos[0]);
     cameras.emplace_back("third person", cameraPos[1]);
 
-    
+    log.info("Test");
+    log.warning("Test");
+    log.error("Test");
+    log.critical("Test");
+    log.debug("Test");
+    log.trace("Test");
 
     int activeCameraIndex = 0;
 
@@ -110,8 +118,9 @@ int main() {
                     if (activeCameraIndex > cameras.size() - 1) {
                         activeCameraIndex = 0;
                     }
-
+                    
                     std::cout << "Camera active: " << cameras[activeCameraIndex].GetName() << std::endl;
+                    
                 }
 
                 if (controls.keyT()) {
