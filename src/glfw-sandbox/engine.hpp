@@ -1,13 +1,14 @@
+#include "logger.hpp"
+
 
 class WindowCreator
 {
 private:
+	logger WinLog;
+
 	int resWidth{};
 	int resHeight{};
 	
-	// Could you please clarify what these three do?
-	// Are these ponters? If posssible just a little clarification how this works
-	// This might be tied to main.cpp line 23-32
 	char *title;
 	GLFWmonitor *monitor;
 	GLFWwindow *share;
@@ -51,17 +52,17 @@ private:
 
 public:
 
-	WindowCreator(int resW, int resH, int fov) // for now leave other values and hardcode like a noob, Petr help <3 :D
+	WindowCreator(int resW, int resH, int fov) 
 		: resWidth{ resW }, resHeight{ resH }, fieldOfView{fov}
 	{
 		if (!glfwInit())
 		{
-			std::cout << "Failed to initialize GLFW library" << std::endl;
+			WinLog.error("Failed to initialize GLFW library");
 		}
 		
-		if (glfwVulkanSupported())
+		if (!glfwVulkanSupported())
 		{
-			
+			WinLog.error("Vulkan not supported");
 		}
 	};
 
@@ -78,7 +79,6 @@ public:
 		{
 			std::cout << "Failed to initialize GLFW window" << std::endl;
 			glfwTerminate();
-			//return 2; same as above
 		}
 
 		// Needed before GLEW
@@ -90,7 +90,6 @@ public:
 		{
 			std::cout << "Failed to initialize GLEW library: " << glewGetErrorString(err) << std::endl;
 		}		
-
 
 		// Initialize OpenGL defaults
 		opengl_intialize();

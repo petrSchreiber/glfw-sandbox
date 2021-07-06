@@ -31,6 +31,9 @@
     <Filter Include="Zdrojové soubory\drawings01">
       <UniqueIdentifier>{39796ced-ca9d-4dbd-a083-0031552391b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Zdrojové soubory\glfw_render">
+      <UniqueIdentifier>{16d55bcf-89c0-49f1-9f51-292b8cf1c238}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -50,9 +53,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="engine.hpp">
-      <Filter>Zdrojové soubory</Filter>
-    </ClInclude>
     <ClInclude Include="logger.hpp">
       <Filter>Zdrojové soubory\logger</Filter>
     </ClInclude>
@@ -73,6 +73,9 @@
     </ClInclude>
     <ClInclude Include="drawings.hpp">
       <Filter>Zdrojové soubory\drawings01</Filter>
+    </ClInclude>
+    <ClInclude Include="engine.hpp">
+      <Filter>Zdrojové soubory\glfw_render</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
