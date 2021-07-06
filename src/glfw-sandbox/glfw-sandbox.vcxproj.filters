@@ -16,48 +16,63 @@
     <Filter Include="Zdrojové soubory\logger">
       <UniqueIdentifier>{24dd2e2f-0721-475b-af42-7b931f833ef4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Zdrojové soubory\camera">
+      <UniqueIdentifier>{18c2ebec-2649-40ab-a822-0e201867b2cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Zdrojové soubory\controls">
+      <UniqueIdentifier>{aae97d7c-5837-426b-b5bd-5f69625f4908}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Zdrojové soubory\frame">
+      <UniqueIdentifier>{9d78154c-93cd-4555-a4e6-2d08e5aa6c71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Zdrojové soubory\vactor3d">
+      <UniqueIdentifier>{3cdd077c-e313-4531-be4a-5e0584775553}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Zdrojové soubory\drawings01">
+      <UniqueIdentifier>{39796ced-ca9d-4dbd-a083-0031552391b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Zdrojové soubory</Filter>
     </ClCompile>
-    <ClCompile Include="frame.cpp">
-      <Filter>Zdrojové soubory</Filter>
-    </ClCompile>
-    <ClCompile Include="camera.cpp">
-      <Filter>Zdrojové soubory</Filter>
-    </ClCompile>
-    <ClCompile Include="vector3d.cpp">
-      <Filter>Zdrojové soubory</Filter>
-    </ClCompile>
     <ClCompile Include="logger.cpp">
       <Filter>Zdrojové soubory\logger</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>Zdrojové soubory\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="frame.cpp">
+      <Filter>Zdrojové soubory\frame</Filter>
+    </ClCompile>
+    <ClCompile Include="vector3d.cpp">
+      <Filter>Zdrojové soubory\vactor3d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine.hpp">
       <Filter>Zdrojové soubory</Filter>
     </ClInclude>
-    <ClInclude Include="drawings.hpp">
-      <Filter>Zdrojové soubory</Filter>
-    </ClInclude>
-    <ClInclude Include="controls.hpp">
-      <Filter>Zdrojové soubory</Filter>
-    </ClInclude>
-    <ClInclude Include="controls_static.hpp">
-      <Filter>Zdrojové soubory</Filter>
-    </ClInclude>
-    <ClInclude Include="frame.hpp">
-      <Filter>Zdrojové soubory</Filter>
-    </ClInclude>
-    <ClInclude Include="camera.hpp">
-      <Filter>Zdrojové soubory</Filter>
-    </ClInclude>
-    <ClInclude Include="vector3d.hpp">
-      <Filter>Zdrojové soubory</Filter>
-    </ClInclude>
     <ClInclude Include="logger.hpp">
       <Filter>Zdrojové soubory\logger</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.hpp">
+      <Filter>Zdrojové soubory\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="controls.hpp">
+      <Filter>Zdrojové soubory\controls</Filter>
+    </ClInclude>
+    <ClInclude Include="controls_static.hpp">
+      <Filter>Zdrojové soubory\controls</Filter>
+    </ClInclude>
+    <ClInclude Include="frame.hpp">
+      <Filter>Zdrojové soubory\frame</Filter>
+    </ClInclude>
+    <ClInclude Include="vector3d.hpp">
+      <Filter>Zdrojové soubory\vactor3d</Filter>
+    </ClInclude>
+    <ClInclude Include="drawings.hpp">
+      <Filter>Zdrojové soubory\drawings01</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,13 +1,17 @@
 // Documentation for GLFW: https://www.glfw.org/documentation.html
 
-#include <windows.h>
-
-#define GLFW_INCLUDE_NONE
-#include <GLFW/glfw3.h> // Will give use GLFW
-
 #define GLEW_STATIC
 #include <glew.h>       // Will give us the latest OpenGL available
 
+#define GLFW_INCLUDE_VULKAN
+//#include "vulkan/vulkan.h"
+#include <GLFW/glfw3.h> // Will give use GLFW
+
+
+
+
+// Note: window.h needed to be moved down
+#include <windows.h>
 #include <iostream>
 #include "drawings.hpp"
 #include "engine.hpp"
@@ -38,12 +42,12 @@ int main() {
     cameras.emplace_back("first person", cameraPos[0]);
     cameras.emplace_back("third person", cameraPos[1]);
 
-    log.info("Test");
-    log.warning("Test");
-    log.error("Test");
-    log.critical("Test");
-    log.debug("Test");
-    log.trace("Test");
+    log.info("Trying to test Vulkan");
+
+    if (glfwVulkanSupported())
+    {
+        log.info("Vulkan Available");
+    }
 
     int activeCameraIndex = 0;
 

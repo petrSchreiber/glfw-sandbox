@@ -57,12 +57,17 @@ public:
 		if (!glfwInit())
 		{
 			std::cout << "Failed to initialize GLFW library" << std::endl;
-			//return 1; Why I can't return 1 here?
+		}
+		
+		if (glfwVulkanSupported())
+		{
+			
 		}
 	};
 
 	auto getWindow() { 
 
+		
 		GLFWwindow* window;
 		window = glfwCreateWindow(resWidth, resHeight,				// Resolution
 			"Having problems with this one in constructor",         // Title
@@ -85,6 +90,7 @@ public:
 		{
 			std::cout << "Failed to initialize GLEW library: " << glewGetErrorString(err) << std::endl;
 		}		
+
 
 		// Initialize OpenGL defaults
 		opengl_intialize();
