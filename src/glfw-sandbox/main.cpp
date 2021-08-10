@@ -4,10 +4,8 @@
 #include <glew.h>       // Will give us the latest OpenGL available
 
 #define GLFW_INCLUDE_VULKAN
-//#include "vulkan/vulkan.h"
+#include "vulkan/vulkan.h"
 #include <GLFW/glfw3.h> // Will give use GLFW
-
-
 
 
 // Note: window.h needed to be moved down
@@ -21,9 +19,12 @@
 #include "camera.hpp"
 #include <vector>
 #include "logger.hpp"
+#include "vk_renderer.hpp"
 
 
 int main() {
+
+    Renderer r;
 
     logger log;
 

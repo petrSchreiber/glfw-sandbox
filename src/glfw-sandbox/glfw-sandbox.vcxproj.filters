@@ -34,6 +34,9 @@
     <Filter Include="Zdrojové soubory\glfw_render">
       <UniqueIdentifier>{16d55bcf-89c0-49f1-9f51-292b8cf1c238}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Zdrojové soubory\vulkan_renderer">
+      <UniqueIdentifier>{82d96da0-0092-44ff-80da-f0083d98917a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -50,6 +53,9 @@
     </ClCompile>
     <ClCompile Include="vector3d.cpp">
       <Filter>Zdrojové soubory\vactor3d</Filter>
+    </ClCompile>
+    <ClCompile Include="vk_renderer.cpp">
+      <Filter>Zdrojové soubory\vulkan_renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="engine.hpp">
       <Filter>Zdrojové soubory\glfw_render</Filter>
+    </ClInclude>
+    <ClInclude Include="vk_renderer.hpp">
+      <Filter>Zdrojové soubory\vulkan_renderer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
