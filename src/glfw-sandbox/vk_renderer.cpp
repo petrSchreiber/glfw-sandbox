@@ -21,17 +21,17 @@ void Renderer::initInstance()
 	VkApplicationInfo applicationInfo{};
 	applicationInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
 	/*Tells application/driver which Vulkan version this application uses*/
-	applicationInfo.apiVersion = VK_API_VERSION_1_2;
-	applicationInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
-	applicationInfo.pApplicationName = "AKAI Engine";
+	applicationInfo.apiVersion				= VK_API_VERSION_1_2;
+	applicationInfo.applicationVersion		= VK_MAKE_VERSION(1, 0, 0);
+	applicationInfo.pApplicationName		= "AKAI Engine";
 
 	/*Here we create  the parameters that vkCreateInstance uses and their parameters*/
 	VkInstanceCreateInfo instanceCreateInfo{};
 	
 	/*sType is always required for all Vulkan structures or types and its mostly the same for each type*/
 	/*Its usually VK_STRUCTURE_TYPE_ + name of the structure*/
-	instanceCreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
-	instanceCreateInfo.pApplicationInfo = &applicationInfo;
+	instanceCreateInfo.sType				= VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
+	instanceCreateInfo.pApplicationInfo		= &applicationInfo;
 
 	auto err = vkCreateInstance(&instanceCreateInfo, nullptr, &instance);
 	if (VK_SUCCESS != err)
@@ -96,21 +96,23 @@ void Renderer::initDevice()
 		assert(1 && "Vulkan Error: Queue Family supporting graphics not found");
 		std::exit(-1);
 	}
+
+
 	
 
 	float queuePrioritiesList[]{ 1.0f };
 
 	VkDeviceQueueCreateInfo deviceQueueCreateInfo{};
-	deviceQueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-	deviceQueueCreateInfo.queueFamilyIndex = gpuFamilyIndex;
-	deviceQueueCreateInfo.queueCount = 1;
-	deviceQueueCreateInfo.pQueuePriorities = queuePrioritiesList;
+	deviceQueueCreateInfo.sType					= VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+	deviceQueueCreateInfo.queueFamilyIndex		= gpuFamilyIndex;
+	deviceQueueCreateInfo.queueCount			= 1;
+	deviceQueueCreateInfo.pQueuePriorities		= queuePrioritiesList;
 	
 	
 	VkDeviceCreateInfo deviceCreateInfo{};
-	deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-	deviceCreateInfo.queueCreateInfoCount = 1;
-	deviceCreateInfo.pQueueCreateInfos = &deviceQueueCreateInfo;
+	deviceCreateInfo.sType						= VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+	deviceCreateInfo.queueCreateInfoCount		= 1;
+	deviceCreateInfo.pQueueCreateInfos			= &deviceQueueCreateInfo;
 
 	auto error = vkCreateDevice(GPU, &deviceCreateInfo, nullptr, &device);
 	if (VK_SUCCESS != error) {
