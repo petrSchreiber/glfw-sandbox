@@ -33,10 +33,10 @@ void Renderer::initInstance()
 	instanceCreateInfo.sType				= VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 	instanceCreateInfo.pApplicationInfo		= &applicationInfo;
 
-	auto err = vkCreateInstance(&instanceCreateInfo, nullptr, &instance);
+	auto err = vkCreateInstance(&instanceCreateInfo, VK_NULL_HANDLE, &instance);
 	if (VK_SUCCESS != err)
 	{
-		assert( 1 && "Vulkan Error: Create instance failed");
+		assert( 0 && "Vulkan Error: Create instance failed");
 		std::exit(-1);
 
 	}
@@ -47,7 +47,7 @@ void Renderer::initInstance()
 void Renderer::deInitInstance()
 {
 	/*Function to destroy the instance once its not needed or program terminated*/
-	vkDestroyInstance(instance, nullptr);
+	vkDestroyInstance(instance, VK_NULL_HANDLE);
 	
 	/*This should be a failsafe that the instance is destroyed (just in case)
 	May not be needed but keeping it for now - will experiment*/
@@ -63,7 +63,7 @@ void Renderer::initDevice()
 
 	/*Fun Part, getting the physical device here*/
 	uint32_t gpuCount = 0;
-	vkEnumeratePhysicalDevices(instance, &gpuCount, nullptr);
+	vkEnumeratePhysicalDevices(instance, &gpuCount, VK_NULL_HANDLE);
 	std::vector<VkPhysicalDevice> gpuList(gpuCount);
 	/*This populates the lsit of GPUs, first one is probably the main one
 	There are probably better ways*/
@@ -78,7 +78,7 @@ void Renderer::initDevice()
 
 	/*How many families in this GPU*/
 	uint32_t familiyCount = 0;
-	vkGetPhysicalDeviceQueueFamilyProperties(GPU, &familiyCount, nullptr);
+	vkGetPhysicalDeviceQueueFamilyProperties(GPU, &familiyCount, VK_NULL_HANDLE);
 	std::vector<VkQueueFamilyProperties> familyPropertyList{ familiyCount };
 	vkGetPhysicalDeviceQueueFamilyProperties(GPU, &familiyCount, familyPropertyList.data());
 
@@ -93,7 +93,7 @@ void Renderer::initDevice()
 	
 	if (!gpuFound)
 	{
-		assert(1 && "Vulkan Error: Queue Family supporting graphics not found");
+		assert(0 && "Vulkan Error: Queue Family supporting graphics not found");
 		std::exit(-1);
 	}
 
@@ -114,9 +114,9 @@ void Renderer::initDevice()
 	deviceCreateInfo.queueCreateInfoCount		= 1;
 	deviceCreateInfo.pQueueCreateInfos			= &deviceQueueCreateInfo;
 
-	auto error = vkCreateDevice(GPU, &deviceCreateInfo, nullptr, &device);
+	auto error = vkCreateDevice(GPU, &deviceCreateInfo, VK_NULL_HANDLE, &device);
 	if (VK_SUCCESS != error) {
-		assert(1 && "Vulkan Error: Device creation failed");
+		assert(0 && "Vulkan Error: Device creation failed");
 		std::exit(-1);
 	}
 
@@ -129,7 +129,7 @@ void Renderer::initDevice()
 void Renderer::deInitDevice()
 {
 
-	vkDestroyDevice(device, nullptr);
-	device = nullptr;
+	vkDestroyDevice(device, VK_NULL_HANDLE);
+	device = VK_NULL_HANDLE;
 
 }

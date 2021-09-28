@@ -20,10 +20,10 @@ private:
 	void initDevice();
 	void deInitDevice();
 
-	VkInstance instance = nullptr;
+	VkInstance instance = VK_NULL_HANDLE;
 
-	VkDevice device = nullptr;
-	VkPhysicalDevice GPU = nullptr;
+	VkDevice device = VK_NULL_HANDLE;
+	VkPhysicalDevice GPU = VK_NULL_HANDLE;
 	VkPhysicalDeviceProperties gpuProperties{};
 
 	uint32_t gpuFamilyIndex = 0;
