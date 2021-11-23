@@ -1,6 +1,6 @@
 #pragma once
 
-#include "vector3d.hpp"
+#include "vector3d/vector3d.hpp"
 #include <string>
 
 class CameraManager {
