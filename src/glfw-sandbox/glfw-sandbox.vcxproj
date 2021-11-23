@@ -147,23 +147,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="camera.cpp" />
-    <ClCompile Include="frame.cpp" />
+    <ClCompile Include="src\camera\camera.cpp" />
+    <ClCompile Include="src\frame\frame.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="logger.cpp" />
-    <ClCompile Include="vector3d.cpp" />
-    <ClCompile Include="vk_renderer.cpp" />
+    <ClCompile Include="src\logger\logger.cpp" />
+    <ClCompile Include="src\vector3d\vector3d.cpp" />
+    <ClCompile Include="src\vkrenderer\vk_renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="camera.hpp" />
-    <ClInclude Include="controls.hpp" />
-    <ClInclude Include="controls_static.hpp" />
-    <ClInclude Include="engine.hpp" />
-    <ClInclude Include="drawings.hpp" />
-    <ClInclude Include="frame.hpp" />
-    <ClInclude Include="logger.hpp" />
-    <ClInclude Include="vector3d.hpp" />
-    <ClInclude Include="vk_renderer.hpp" />
+    <ClInclude Include="src\camera\camera.hpp" />
+    <ClInclude Include="src\camera\controls.hpp" />
+    <ClInclude Include="src\controls\controls_static.hpp" />
+    <ClInclude Include="src\engine\engine.hpp" />
+    <ClInclude Include="src\drawings\drawings.hpp" />
+    <ClInclude Include="src\frame\frame.hpp" />
+    <ClInclude Include="src\logger\logger.hpp" />
+    <ClInclude Include="src\vector3d\vector3d.hpp" />
+    <ClInclude Include="src\vkrenderer\vk_renderer.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

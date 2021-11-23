@@ -42,48 +42,48 @@
     <ClCompile Include="main.cpp">
       <Filter>Zdrojové soubory</Filter>
     </ClCompile>
-    <ClCompile Include="logger.cpp">
+    <ClCompile Include="src\logger\logger.cpp">
       <Filter>Zdrojové soubory\logger</Filter>
     </ClCompile>
-    <ClCompile Include="camera.cpp">
+    <ClCompile Include="src\camera\camera.cpp">
       <Filter>Zdrojové soubory\camera</Filter>
     </ClCompile>
-    <ClCompile Include="frame.cpp">
+    <ClCompile Include="src\frame\frame.cpp">
       <Filter>Zdrojové soubory\frame</Filter>
     </ClCompile>
-    <ClCompile Include="vector3d.cpp">
+    <ClCompile Include="src\vector3d\vector3d.cpp">
       <Filter>Zdrojové soubory\vactor3d</Filter>
     </ClCompile>
-    <ClCompile Include="vk_renderer.cpp">
+    <ClCompile Include="src\vkrenderer\vk_renderer.cpp">
       <Filter>Zdrojové soubory\vulkan_renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="logger.hpp">
+    <ClInclude Include="src\logger\logger.hpp">
       <Filter>Zdrojové soubory\logger</Filter>
     </ClInclude>
-    <ClInclude Include="camera.hpp">
+    <ClInclude Include="src\camera\camera.hpp">
       <Filter>Zdrojové soubory\camera</Filter>
     </ClInclude>
-    <ClInclude Include="controls.hpp">
+    <ClInclude Include="src\camera\controls.hpp">
       <Filter>Zdrojové soubory\controls</Filter>
     </ClInclude>
-    <ClInclude Include="controls_static.hpp">
+    <ClInclude Include="src\controls\controls_static.hpp">
       <Filter>Zdrojové soubory\controls</Filter>
     </ClInclude>
-    <ClInclude Include="frame.hpp">
+    <ClInclude Include="src\frame\frame.hpp">
       <Filter>Zdrojové soubory\frame</Filter>
     </ClInclude>
-    <ClInclude Include="vector3d.hpp">
+    <ClInclude Include="src\vector3d\vector3d.hpp">
       <Filter>Zdrojové soubory\vactor3d</Filter>
     </ClInclude>
-    <ClInclude Include="drawings.hpp">
+    <ClInclude Include="src\drawings\drawings.hpp">
       <Filter>Zdrojové soubory\drawings01</Filter>
     </ClInclude>
-    <ClInclude Include="engine.hpp">
+    <ClInclude Include="src\engine\engine.hpp">
       <Filter>Zdrojové soubory\glfw_render</Filter>
     </ClInclude>
-    <ClInclude Include="vk_renderer.hpp">
+    <ClInclude Include="src\vkrenderer\vk_renderer.hpp">
       <Filter>Zdrojové soubory\vulkan_renderer</Filter>
     </ClInclude>
   </ItemGroup>
