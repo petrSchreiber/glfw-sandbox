@@ -117,12 +117,12 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\thirdparty\spdlog\include;$(SolutionDir)$(ProjectName)\thirdparty\\glew-2.2.0\include\GL;$(SolutionDir)$(ProjectName)\thirdparty\glfw-3.3.3.bin.WIN64\include;C:\dev\dependencies\VulkanSDK\1.2.189.2\Include;$(SolutionDir)$(ProjectName)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\thirdparty\spdlog\include;$(SolutionDir)$(ProjectName)\thirdparty\\glew-2.2.0\include\GL;$(SolutionDir)$(ProjectName)\thirdparty\glfw-3.3.3.bin.WIN64\include;C:\dev\dependencies\VulkanSDK\1.2.198.0\Include;$(SolutionDir)$(ProjectName)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalDependencies>$(SolutionDir)$(ProjectName)\thirdparty\glew-2.2.0\lib\Release\x64\glew32s.lib;$(SolutionDir)$(ProjectName)\thirdparty\glfw-3.3.3.bin.WIN64\lib-vc2019\glfw3.lib;opengl32.lib;glu32.lib;vulkan-1.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(ProjectName)\thirdparty\glfw-3.3.3.bin.WIN64\lib-vc2019;C:\dev\dependencies\VulkanSDK\1.2.189.2\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(ProjectName)\thirdparty\glfw-3.3.3.bin.WIN64\lib-vc2019;C:\dev\dependencies\VulkanSDK\1.2.198.0\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -132,7 +132,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>$(SolutionDir)$(ProjectName)\thirdparty\glew-2.2.0\lib\Release\x64\glew32s.lib;$(SolutionDir)$(ProjectName)\thirdparty\glfw-3.3.3.bin.WIN64\lib-vc2019\glfw3.lib;opengl32.lib;glu32.lib;vulkan-1.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(ProjectName)\thirdparty\glfw-3.3.3.bin.WIN64\lib-vc2019;C:\dev\dependencies\VulkanSDK\1.2.189.2\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(ProjectName)\thirdparty\glfw-3.3.3.bin.WIN64\lib-vc2019;C:\dev\dependencies\VulkanSDK\1.2.198.0\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
