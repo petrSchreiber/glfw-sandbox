@@ -352,6 +352,3 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-
-
-!*/glew-2.2.0/lib/Release/x64/glew32.lib
