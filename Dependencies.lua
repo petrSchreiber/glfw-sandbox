@@ -1,23 +1,22 @@
 
 -- Akai Dependencies
+-- Will add more as the project grows
 
 VULKAN_SDK = os.getenv("VULKAN_SDK")
 
 IncludeDir = {}
 IncludeDir["Glew"] = "%{wks.location}/Akai/thirdparty/glew-2.2.0/include/GL"
-IncludeDir["Glfw"] = "%{wks.location}/Akai/thirdparty/glfw-3.3.3.bin.WIN64/include"
-IncludeDir["Spdlog"] = "%{wks.location}/Akai/thirdparty/glfw-3.3.3.bin.WIN64/include"
+IncludeDir["Glfw"] = "%{wks.location}/Akai/thirdparty/glfw-3.3.3/include"
+IncludeDir["Spdlog"] = "%{wks.location}/Akai/thirdparty/spdlog/include"
 IncludeDir["VulkanSDK"] = "%{VULKAN_SDK}/Include"
 
 LibraryDir = {}
 
 LibraryDir["VulkanSDK"] = "%{VULKAN_SDK}/Lib"
-LibraryDir["Glew"] = "%{wks.location}/Akai/thirdparty/glew-2.2.0/lib/Release/x64"
-LibraryDir["Glfw"] = "%{wks.location}/Akai/thirdparty/glfw-3.3.3.bin.WIN64/lib-vc2019/"
+LibraryDir["Glew"] = "%{wks.location}/Akai/thirdparty/glew-2.2.0/lib"
+LibraryDir["Glfw"] = "%{wks.location}/Akai/thirdparty/glfw-3.3.3/lib-vc2019/"
 
 Library = {}
-
--- print()
 
 Library["Glew"] = "glew32s.lib"
 Library["Glfw"] = "glfw3.lib"

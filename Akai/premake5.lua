@@ -14,8 +14,9 @@ project "Akai"
 
 	includedirs
 	{
-		"%{wks.location}/Akai/thirdparty/spdlog/include",
+		--"%{wks.location}/Akai/thirdparty/spdlog/include",
 		"%{wks.location}/Akai/src",
+		"%{IncludeDir.Spdlog}",
 		"%{IncludeDir.VulkanSDK}",
 		"%{IncludeDir.Glew}",
 		"%{IncludeDir.Glfw}",
