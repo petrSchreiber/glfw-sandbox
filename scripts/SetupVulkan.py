@@ -1,26 +1,18 @@
 import os
-import sys
-import subprocess
 from pathlib import Path
-
 import Utils
-
-from io import BytesIO
-from urllib.request import urlopen
 
 
 class VulkanConfiguration:
-    requiredVulkanVersion = "1.2.189.2"
-    vulkanDirectory = r"C:\dev\dependencies\VulkanSDK"
+    requiredVulkanVersion = "1.2.198.1"
+    installer = 'VulkanSDK-1.2.198.1-Installer.exe'
+    vulkanDirectory = r"./VulkanSDK/"
 
     @classmethod
     def Validate(cls):
         if not cls.CheckVulkanSDK():
-            print("Vulkan SDK not installed correctly.")
+            print("Vulkan SDK not installed.")
             return
-
-        if not cls.CheckVulkanSDKDebugLibs():
-            print("Vulkan SDK debug libs not found.")
 
     @classmethod
     def CheckVulkanSDK(cls):
@@ -37,27 +29,32 @@ class VulkanConfiguration:
             cls.__InstallVulkanSDK()
             return False
 
-        print(f"Correct Vulkan SDK located at {vulkanSDK}")
+        print(f"Correct VulkanSDK installed successfully")
+
+        # Cleanup to save some space
+        if os.path.exists(f'VulkanSDK/VulkanSDK-1.2.198.1-Installer.exe'):
+            print(f'Removing {cls.installer}')
+            os.remove(f'VulkanSDK/{cls.installer}')
+        if os.path.exists('VulkanSDK'):
+            os.rmdir('VulkanSDK')
+
         return True
 
     @classmethod
     def __InstallVulkanSDK(cls):
-        permissionGranted = False
-        while not permissionGranted:
-            reply = str(input("Would you like to install VulkanSDK {0:s}? [Y/N]: ".format(
-                cls.requiredVulkanVersion))).lower().strip()[:1]
-            if reply == 'n':
-                return
-            permissionGranted = (reply == 'y')
 
-        vulkanInstallURL = f"https://sdk.lunarg.com/sdk/download/{cls.requiredVulkanVersion}/windows/VulkanSDK-{cls.requiredVulkanVersion}-Installer.exe"
-        vulkanPath = f"{cls.vulkanDirectory}/VulkanSDK-{cls.requiredVulkanVersion}-Installer.exe"
-        print("Downloading {0:s} to {1:s}".format(vulkanInstallURL, vulkanPath))
-        Utils.DownloadFile(vulkanInstallURL, vulkanPath)
-        print("Running Vulkan SDK installer...")
-        os.startfile(os.path.abspath(vulkanPath))
-        print("Re-run this script after installation!")
-        quit()
+        reply = str(input(f"Would you like to install VulkanSDK v{cls.requiredVulkanVersion}? [Y/N]: "))
+        if reply.lower() == 'y':
+            vulkanInstallURL = f"https://sdk.lunarg.com/sdk/download/{cls.requiredVulkanVersion}/windows/VulkanSDK-{cls.requiredVulkanVersion}-Installer.exe"
+            vulkanPath = f"{cls.vulkanDirectory}/VulkanSDK-{cls.requiredVulkanVersion}-Installer.exe"
+            print(f"Downloading {vulkanInstallURL} to {vulkanPath}")
+            Utils.DownloadFile(vulkanInstallURL, vulkanPath)
+            print("Running Vulkan SDK installer...")
+            os.startfile(os.path.abspath(vulkanPath))
+            print("Re-run this script after installation!")
+            quit()
+        else:
+            print('Akai Engine requires VulkanSDK')
 
     @classmethod
     def CheckVulkanSDKDebugLibs(cls):
