@@ -18,9 +18,18 @@
 #include <vector>
 #include "vector3d/vector3d.hpp"
 #include "logger/logger.hpp"
+#include "renderer/akaiVulkan.hpp"
 
 
 int main() {
+
+    // Akai Vulkan Test
+
+    auto akaivulkan = akaiVulkan();
+    akaivulkan.initialize();
+
+
+    // Akai Vulkan test end
 
     logger log;
 
