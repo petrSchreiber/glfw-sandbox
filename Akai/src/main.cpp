@@ -26,8 +26,10 @@ int main() {
     // Akai Vulkan Test
 
     auto akaivulkan = akaiVulkan();
+    // At the moment it does not do anything except creating an instance.
+    // Testing validation layers - if debug they will show.
     akaivulkan.initialize();
-
+    
 
     // Akai Vulkan test end
 
