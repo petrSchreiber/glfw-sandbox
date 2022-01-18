@@ -1,58 +1,57 @@
 #pragma once
 
+#define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
 #include <iostream>
 #include <stdexcept>
 #include <cstdlib>
-#include "akaiVulkan.cpp"
+#include <vulkan/vulkan.h>
+#include <vector>
+
+#ifdef NDEBUG
+const bool enableValidationLayers = false;
+#else
+const bool enableValidationLayers = true;
+#endif
 
 
-void akaiVulkan::initialize()
+class akaiVulkan
 {
-    createInstance();
-}
+public:
+    void initialize();
 
-void akaiVulkan::createInstance() {
+    void cleanup(GLFWwindow* window);
 
-    // Vulkan Application Info Instance
-    VkApplicationInfo appInfo{};
-    appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-    appInfo.pApplicationName = "Hello Triangle";
-    appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
-    appInfo.pEngineName = "No Engine";
-    appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
-    appInfo.apiVersion = VK_API_VERSION_1_0;
+private:
 
-    // Vulkan Create Info Instance
-    VkInstanceCreateInfo createInfo{};
-    createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
-    createInfo.pApplicationInfo = &appInfo;
+    const std::vector<const char*> validationLayers = { "VK_LAYER_KHRONOS_validation" };
 
-    uint32_t glfwExtensionCount = 0;
-    const char** glfwExtensions;
-    glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
+    VkInstance instance;
+    VkDebugUtilsMessengerEXT debugMessenger;
 
-    createInfo.enabledExtensionCount = glfwExtensionCount;
-    createInfo.ppEnabledExtensionNames = glfwExtensions;
+    void createInstance();
 
-    createInfo.enabledLayerCount = 0;
+    bool checkValidationLayerSupport();
 
-    if (vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS) {
-        throw std::runtime_error("failed to create instance!");
-    }
+    std::vector<const char*> getRequiredExtensions();
 
-    std::cout << "DEBUG: Vulkan Instance created successfully" << std::endl;
+    // This is a bit strange one, not sure what it does or how it works.
+    // TBH this didn't even work if I declare a function here and have it defined in appropriate cpp file.
+    // It would cause a linker error, despite following all StackOverflow guides to properly declare and define.
+    // Could really use your help a bit with vulkan validation layers.
+    static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData) {
+        std::cerr << "validation layer: " << pCallbackData->pMessage << std::endl;
 
-}
+        return VK_FALSE;
+    };
 
-void akaiVulkan::cleanup(GLFWwindow* window)
-{
+    void setupDebugMessenger();
 
-    vkDestroyInstance(instance, nullptr);
+    void populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo);
 
-    glfwDestroyWindow(window);
+    VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pDebugMessenger);
 
-    glfwTerminate();
-    std::cout << "DEBUG: Vulkan cleanup completed successfully" << std::endl;
-}
+    void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT debugMessenger, const VkAllocationCallbacks* pAllocator);
+
+};
