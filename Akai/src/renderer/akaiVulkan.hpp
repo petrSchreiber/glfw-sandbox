@@ -36,6 +36,10 @@ private:
 
     std::vector<const char*> getRequiredExtensions();
 
+    // This is a bit strange one, not sure what it does or how it works.
+    // TBH this didn't even work if I declare a function here and have it defined in appropriate cpp file.
+    // It would cause a linker error, despite following all StackOverflow guides to properly declare and define.
+    // Could really use your help a bit with vulkan validation layers.
     static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData) {
         std::cerr << "validation layer: " << pCallbackData->pMessage << std::endl;
 

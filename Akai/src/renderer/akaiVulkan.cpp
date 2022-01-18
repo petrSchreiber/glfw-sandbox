@@ -98,6 +98,7 @@ void akaiVulkan::cleanup(GLFWwindow* window)
 // Functuon which checks if the requested validation layers are available.
 // Returns bool - false if they are not available, true otherwise.
 bool akaiVulkan::checkValidationLayerSupport() {
+    
     uint32_t layerCount;
     vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
 
@@ -125,6 +126,7 @@ bool akaiVulkan::checkValidationLayerSupport() {
 
 // Function that will return the required list of extensions based on whether validation layers are enabled or not
 std::vector<const char*> akaiVulkan::getRequiredExtensions() {
+   
     uint32_t glfwExtensionCount = 0;
     const char** glfwExtensions;
     glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
