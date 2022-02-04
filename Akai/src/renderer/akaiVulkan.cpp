@@ -184,3 +184,8 @@ void akaiVulkan::DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtils
         func(instance, debugMessenger, pAllocator);
     }
 }
+
+VkInstance akaiVulkan::getInstance() {
+
+    return instance;
+}
