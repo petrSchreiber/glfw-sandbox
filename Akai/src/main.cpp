@@ -19,9 +19,17 @@
 #include "vector3d/vector3d.hpp"
 #include "logger/logger.hpp"
 #include "renderer/akaiVulkan.hpp"
+#include "renderer/akaiPhysicalDevice.hpp"
+
+// old VK renderer
+#include "vkrenderer_old/vk_renderer.hpp"
 
 
 int main() {
+
+    logger log;
+    
+    log.info("App started...");
 
     // Akai Vulkan Test
 
@@ -29,11 +37,21 @@ int main() {
     // At the moment it does not do anything except creating an instance.
     // Testing validation layers - if debug they will show.
     akaivulkan.initialize();
+    auto akaiinstance = akaivulkan.getInstance();
+
+    auto akaiphysicaldevice = akaiPhysicalDevice();
+    akaiphysicaldevice.setInstance(akaiinstance);
+    akaiphysicaldevice.pickPhysicalDevice();
+    
+    auto testdevice = akaiphysicaldevice.returnPhysicalDevice();
+    std::cout << "Test device: " << &testdevice << std::endl;
+    
+    
     
 
     // Akai Vulkan test end
 
-    logger log;
+    
 
     WindowCreator windowObject(1280, 720, 60);
     auto window = windowObject.getWindow();
